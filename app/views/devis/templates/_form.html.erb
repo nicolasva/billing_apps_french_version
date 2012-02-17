@@ -1,0 +1,166 @@
+<%= javascript_include_tag "form_devis" %>
+    <p>
+	<%= f.label(:created_at, "Crée le") %><br>
+	<%= f.date_select(:created_at, :order => [:day, :month, :year]) %>
+    </p>
+
+    <p>
+    	<%= f.label(:numdevis) %><br>
+	<%= f.text_field(:numdevis) %>
+    </p>
+
+    <p>
+    	<%= f.label(:etat) %><br>
+	<%= f.select(:etat, [["En attente", 1],["Accepté", 2],["Refusé", 3]]) %>
+    </p>
+
+    <p>
+    	<%= f.label(:description) %><br>
+    	<%= f.text_area(:description) %>
+    </p>
+
+    <ul id='id_information_general'>
+	    <% Information.all.each do |information| %> 
+		    <% content_tag_for :li, information do %>
+			    <%= information.name %>
+			    <table border='1' cellpadding='0' cellspacing='0' width='1100px'>
+				    <tr>	
+					    <td width='350px'>Produit</td>
+					    <td width='230px'>Nombre</td>
+					    <td width='55px'>Unité</td>
+					    <td width='230px'>Prix</td>
+					    <td width='100px'>Total</td>
+					    <td width='72px'>Supression</td>
+				    </tr>
+			    </table>
+			         <ol id='informationlignes_informations_<%= information.id %>' class='informationlignes'>
+				   <% @devi.informationlignes.find(:all, :conditions=>{:information_id=>information.id}, :order => "position").each{ |informationligne| %>
+	    			     <%  f.fields_for(:informationlignes, informationligne) do |information_field| %>	     
+					     <% content_tag_for :li, informationligne do %> 
+						     <ul id="id_ul_informationligne_<%= informationligne.id %>">
+						    	<% informationligne.titleinformationlignes.each{ |titleinformationligne| %>	
+								<% information_field.fields_for(:titleinformationlignes, titleinformationligne) do |titleinformationligne_field| %>
+									<% content_tag :li, titleinformationligne, :class=>"class_test" do %>
+										<%= titleinformationligne_field.text_field(:title) %><%= titleinformationligne_field.select(:font_size, array_select_form_font_size_num) %><%= titleinformationligne_field.select(:font_weight, [["normal", "normal"],["gras", "bold"]]) %><%= titleinformationligne_field.submit "Supprimer ce titre", :name=>"suptitre_titleinformationligne_id_#{titleinformationligne.id}_deviid_#{@devi.id}" %> 
+									<% end %>
+						        	<% end %>
+							<% } %>
+						</ul>
+					  <table border='1' cellpadding='0' cellspacing='0' width='1100px'>    
+					    <tr>
+						<td width='350px'><%= information_field.text_area :name, :rows=>3 %></td>
+						<td width='230px'><%= information_field.text_field :number, :class=>"class_champs_number" %></td>
+						<td width='55px'>
+							<%= information_field.select(:unite, [["pce", "pce"], ["j", "j"]]) %>
+						</td>
+						<td width='230px'><%= information_field.text_field :price, :class=>"class_champs_price" %></td>
+						<td width='100px'><%= informationligne.number.nil? && informationligne.price.nil? ? "" : format("%.2f", informationligne.number * informationligne.price) %></td>
+						<td width='72px'><%= information_field.submit "X", :name=>"sup_ligne_deviid_#{@devi.id}_informationligne_#{informationligne.id}" %></td>
+						<% informationligne.number.nil? && informationligne.price.nil? ? "" : @totalsumgeneral += informationligne.number * informationligne.price %>
+					   </tr>
+				         </table>
+				       <% end %>
+			             <% end %>
+
+
+			         <% } %>
+			       </ol>
+				 <%= sortable_element("informationlignes_informations_#{information.id}", :url=>{:controller=>"devis", :action=>"sort"}) %>
+                                 <table border='1' width='1100px' cellpadding='0' cellspacing='0'>
+				    	<tr>
+						<td width='912px'>
+							Somme <%= information.name %>
+						</td>
+						<td>
+							<%= format("%.2f",@totalsumgeneral) %>
+						</td>
+		    		    	</tr>
+				</table>
+			    <% unless information.titleinformationlignes.empty? || @devi.informationlignes.find(:first, :conditions=>{:information_id=>information.id}, :order => "position").nil? %> 
+			    <%= f.fields_for(:informationlignes, @devi.informationlignes.find(:first, :conditions=>{:information_id=>information.id}, :order => "position")) do |informationligne_field| %>		     
+				    <%= informationligne_field.fields_for(:information, @devi.informationlignes.find(:first, :conditions=>{:information_id=>information.id}, :order => "position").information) do |information_field| %>	
+				    <ul class='class_detail_titleinformationligne'>
+					   
+					    <% @devi.informationlignes.find(:first, :conditions=>{:information_id=>information.id}, :order => "position").information.titleinformationlignes.where(:devi_id=>@devi.id, :informationligne_id=>0).each{ |titleinformationligne| %>
+						     <%= information_field.fields_for(:titleinformationlignes, titleinformationligne)  do |titleinformationligne_fields| %>			
+					     		<% content_tag_for :li, titleinformationligne do %>   
+
+								<%= titleinformationligne_fields.text_field(:title) %><%= titleinformationligne_fields.select(:font_size, array_select_form_font_size_num) %><%= titleinformationligne_fields.select(:font_weight, [["normal", "normal"],["gras", "bold"]]) %><%= titleinformationligne_fields.submit "Supprimer ce titre", :name=>"suptitre_titleinformationligne_id_#{titleinformationligne.id}_deviid_#{@devi.id}" %>
+							<% end %>
+						    <% end %>
+					    <% } %>
+				    </ul>
+				<% end %>
+			       <% end %>
+			     <% end %>
+				<%= f.submit "Ajouter une ligne", :name=>"add_ligne_informationid_#{information.id}_deviid_#{@devi.id}" %> <%= f.submit "Ajouter un titre", :name=>"addtitre_titleinformationligne_informationid_#{information.id}_deviid_#{@devi.id}" %>
+				
+			<% end %>
+			<% @hash_totalsnumgeneral[information.name] = @totalsumgeneral %>
+		    	<% @totalsumgeneral = 0 %>
+	    <% end %>
+	    <li>
+	    	Total
+		<table border='1' id='id_table_total_produit'>
+				<tr>
+					<td>Produit</td>
+					<td>Total net €</td>
+				</tr>
+
+			<% Information.all.each{ |information| %>
+				<tr>
+					<td><%= information.name %></td>
+					<td><%= @hash_totalsnumgeneral[information.name] %></td>
+				</tr>
+				<% @totalsumgeneral += @hash_totalsnumgeneral[information.name] %>
+			<% } %>
+				<tr>
+					<td id='id_total_general'>Total</td>		
+					<td id='id_total_sum_general'><%= format("%.2f", @totalsumgeneral) %></td>
+				</tr>
+				<% unless @devi.lignedevis.empty? %>
+					<% 
+						#@devi.lignedevis.each{ |lignedevi| 
+					@devi.lignedevis.each{ |lignedevi| %>
+					<%=	f.fields_for(:lignedevis, lignedevi) do |lignedevi_fields|
+					%>
+							<% content_tag_for :tr, lignedevi do %>
+								<td>
+									<%= lignedevi_fields.text_field(:name, :class=>"class_champs_name_lignedevi") %>
+								</td>
+								<td>
+									<%= lignedevi_fields.text_field(:prix, :class=>"class_champs_price_lignedevi") %>
+								</td>
+								<td><%= lignedevi_fields.submit "X", :name=>"suplignedevi_lignedevi_deviid_#{@devi.id}_lignedevi_#{lignedevi.id}" %></td>
+								<% @totalsumgeneral += lignedevi.prix %>
+							<% end %>
+						<% end %>	
+					<% } %>
+				<% end %>
+				<tr>
+					<td>
+						HT
+					</td>
+					<td>
+						<%= @totalsumgeneral %>
+					</td>
+				</tr>
+				<tr>
+					<td><%= f.check_box(:tva) %> TVA</td>
+					<td></td>
+				</tr>
+				<tr id='id_tva' style='color:<%= @devi.tva ? 'black' : 'silver' %>;'>
+					<td>TVA 19,6%</td>
+					<td><%= format("%.2f",@totalsumgeneral * 0.196) %></td>
+				</tr>
+				<tr id='id_ttc' style='color:<%= @devi.tva ? 'black' : 'silver' %>;'>
+					<td>TTC</td>
+					<td><%= format("%.2f",(@totalsumgeneral * 0.196) + @totalsumgeneral) %></td>
+				</tr>
+		 </table>
+		 <%= f.submit "Ajouter une ligne au total", :name=>"addlignetotal_ligne_total_devisfactures_deviid_#{@devi.id}" %>
+	    </li>
+    </ul>
+    <%= f.select(:cond_payment, [["30% à la commande, 70% à la livraison.", "30% à la commande, 70% à la livraison."], ["40% à la commande, 60% à la livraison.", "40% à la commande, 60% à la livraison."], ["100% à la commande.", "100% à la commande."], ["100% à la livraison.", "100% à la livraison."], ["100% du matériel et 30% du logiciel à la commande, 70% du logiciel à la livraison.", "100% du matériel et 30% du logiciel à la commande, 70% du logiciel à la livraison."],["60% à la remise de la conception détaillée, 40% à la livraison finale des applications.","60% à la remise de la conception détaillée, 40% à la livraison finale des applications."]]) %>
+
+

@@ -1,0 +1,22 @@
+table.tab_class_list 
+{
+	border: 0px;
+	border-top: 1px solid silver;
+}
+
+table.tab_class_list tr.table_tr_class_contenu td
+{
+	border: 0px;
+	border-bottom: 1px solid silver;
+	border-left: 1px solid silver;
+}
+
+table.tab_class_list tr td.td_fin_colonne_table
+{
+	border-right: 1px solid silver;
+}
+
+table.tab_class_list tr td.class_prices_to_avoir
+{
+	border-right: 1px solid silver;
+}

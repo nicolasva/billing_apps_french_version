@@ -1,0 +1,31 @@
+   <td><%= facture.numfacture  %></td>
+    <% if numdevis %>
+       <td>
+	       <%= link_to facture.devi.numdevis, "#{facture.devi.numdevis}.pdf?id_devi=#{facture.devi_id}" %>
+       </td>
+    <% end %>
+    <td><%= facture.devi.client.nameentreprise %></td>
+    <td style='text-align:right;padding-right:30px;'><%= format("%.2f", get_ht(facture.devi)) %> €</td>
+    <td style='<%= facture.accompte != 100 ? 'background-color:#FEF680;' : "" %>;padding-left:5px;'><%= facture.accompte %> %</td>
+    <td><%= facture.devi.description.nil? || facture.devi.description.empty? ? "" : "#{facture.devi.description.slice(0..20)}..." %></td>
+    <td style='text-align:right;padding-right:30px;'><%= format("%.2f", get_facture_ht(facture)) %> €</td> 
+    <td style='text-align:right;padding-right:30px;'><%= format("%.2f", get_facture_ttc(facture)) %> €</td>
+    <% unless facture.annulation || facture.proforma %>
+    	<td style='background-color:<%= facture.datepaiementcheck ? "#94cd1c" : "red" %>;color:<%= facture.datepaiementcheck ? "black" : "white" %>;padding-left:5px;'><%= (facture.datepaiementcheck ? "Le #{facture.datepaiement.strftime('%d-%m-%Y')}" : "#{(((Time.now - facture.created_at)/86400).round)} jours") %></td>
+    <% else %>
+	    <td style='text-align:center;'><% 
+	    		#(facture.datepaiementcheck ? "Le #{facture.datepaiement.strftime('%d-%m-%Y')}" : "#{(((Time.now - facture.created_at)/86400).round)} jours") 
+		%>
+		-
+	    </td>
+    <% end %>
+    <td><%= facture.created_at.strftime('%d-%m-%Y') %> </td>
+    <td><%= link_to image_tag("img_general/icone_pdf.png", :size=>"20x20"), "factures/#{facture.numfacture}.pdf?facture_id=#{facture.id}", :title=>"Afficher cette facture en PDF" %></td>
+    <td><%= link_to image_tag("img_general/icone_edition.png", :size=>"20x20"), edit_facture_path(facture), :title=>"Editer cette facture" %></td>
+    <td><%= link_to image_tag("img_general/close.gif"), facture, :confirm => "Etes-vous sur de vouloir supprimer cette facture ?", :method => :delete %></td>
+    <td>
+	    <%= link_to image_tag("img_general/avoir.png", :size=>"20x20"), {:controller=>"avoirs", :action=>"index", :facture_id=>facture.id}, :title=>"Voir les avoirs" %>
+    </td>
+    <td class='td_fin_colonne_table'>
+	    <%= link_to image_tag("img_general/avoir_creer.png", :size=>"20x20"), {:controller=>"avoirs", :action=>"new", :facture_id=>facture.id}, :title=>"Creer un avoir" %>
+    </td>

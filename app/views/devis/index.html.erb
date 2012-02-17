@@ -1,0 +1,64 @@
+<h1>Liste des devis <%= params[:client_id].nil? ? link_to("<", :controller=>"devis", :action=>"index", :year=>params[:year].nil? ? Time.now.strftime("%Y").to_i - 1 : params[:year].to_i - 1) : link_to("<", :controller=>"devis", :action=>"index", :year=>(params[:year].nil? ? Time.now.strftime("%Y").to_i - 1 : params[:year].to_i - 1), :client_id=>params[:client_id]) %> <%= params[:year].nil? ? Time.now.strftime("%Y") : params[:year] %> <%= params[:year].nil? || params[:year].to_i == Time.now.strftime("%Y").to_i ? "" : (params[:client_id].nil? ? link_to(">", :controller=>"devis", :action=>"index", :year=>(params[:year].to_i + 1)) : link_to(">", :controller=>"devis", :action=>"index", :year=>(params[:year].to_i + 1), :client_id=>params[:client_id])) %></h1>
+
+<table width='100%' cellpadding='0' border='0' class='tab_class_list' cellspacing='0'>
+  <tr class='table_tr_class_contenu'>
+    <td>N° devis</td>
+    <td style='text-align:right;padding-right:30px;'>HT</td>
+    <td style='padding-left:5px;'>Crée le</td>
+    <td>Nom de l'entreprise</td>
+    <td>Etat</td>
+    <td>Factures</td>
+    <td>PDF</td>
+    <td>Edition</td>
+    <td>Création d'une facture</td>
+    <td>Copier un devis</td>
+    <td>PV de recette</td>
+    <td>Création d'un PV de recette</td>
+    <td>Bon de livraison</td>
+    <td>Création d'un bon de livraison</td>
+    <td class='td_fin_colonne_table'>Supression</td>
+  </tr>
+
+<% @devis.each do |devi| %>
+  <tr class='table_tr_class_contenu' style='background-color:<%= !flash[:id_devi].nil? && flash[:id_devi].to_i == devi.id ? "#FEF680" : "" %>;'>
+    <td><%= devi.numdevis %></td>
+    <td style='text-align:right;padding-right:30px;'><%= format("%.2f", get_ht(devi))  %></td>
+    <td style='padding-left:5px;'><%= devi.created_at.strftime('%d-%m-%Y') %></td>
+    <td><%= devi.client.nameentreprise %></td> 
+    <td style='background-color:<%= get_color_etat(devi.etat) %>;'><%= get_real_etat(devi.etat) %></td>
+    <td><%= link_to image_tag("img_general/facture.png", :size=>"20x20"), {:controller=>"factures", :action=>"index", :devi_id=>devi.id}, :title=>"Liste des factures" %>
+    <%
+    #link_to "Liste des factures", :controller=>"factures", :actions=>"index", :client_id=>devi.client_id 
+    %>
+    <td><%= link_to image_tag("img_general/icone_pdf.png", :size=>"20x20"), "devis/#{devi.numdevis}.pdf?id_devi=#{devi.id}", :title=>"Afficher le pdf de ce devis" %></td>
+    <td><%= link_to image_tag("img_general/icone_edition.png", :size=>"20x20"), edit_devi_path(devi), :title=>"Editer ce devis" %></td>
+    <td><%= 
+    #link_to 'Destroy', devi, :confirm => 'Are you sure?', :method => :delete 
+    link_to image_tag("img_general/facturecreer.png", :size=>"20x20"), {:controller=>"factures", :action=>"new", :devi_id=>devi.id}, :title=>"Creer une nouvelle facture", :confirm=>"Etes-vous sur de vouloir creer une facture ?"
+    %></td>
+    <td><%= link_to image_tag("img_general/copy_icone.png", :size=>"20x20"), {:controller=>"devis", :action=>"new", :devi_id_copy=>devi.id}, :title=>"Copie du devis"%></td>
+    <td><%= link_to image_tag("img_general/pv_recettes.png", :size=>"20x20"), {:controller=>"pvrecettes", :action=>"index", :devi_id=>devi.id}, :title=>"Liste des pv de recettes"%></td>
+    <td><%= link_to image_tag("img_general/creation_pv_recettes.png", :size=>"20x20"), {:controller=>"pvrecettes", :action=>"new", :devi_id=>devi.id}, :title=>"Creer un nouveau pv de recettes" %></td>
+    <td><%= link_to image_tag("img_general/bon_de_commande.png", :size=>"20x20"), {:controller=>"bonlivraisons", :action=>"index", :devi_id=>devi.id}, :title=>"listes des bons de livraisons" %></td>
+    <td><%= link_to image_tag("img_general/bon_de_commande_creer.png", :size=>"20x20"), {:controller=>"bonlivraisons", :action=>"new", :devi_id=>devi.id}, :title=>"Creer un nouveau bon de livraison" %></td>
+    <td class='td_fin_colonne_table'><%= link_to image_tag("img_general/close.gif"), devi, :confirm => "Etes vous sur de vouloir supprimer ce devis, (attention toutes les factures, pvs de recettes ainsi que les bons de livraisons relié à ce devis seront supprimé) ?", :method => :delete  %></td>
+  </tr>
+<% end %>
+  <tr style='height:50px;'>
+  </tr>
+  <tr style='font-weight:bold;'>
+	<td colspan='9' style='text-align:right;padding-right:50px;'>Total HT des devis validés</td>
+	<td style='text-align:left;'><%= format("%.2f", @total_get_ht) %> €</td>
+  </tr>
+  <tr style='font-weight:bold;'>
+	<td colspan='9' style='text-align:right;padding-right:50px;'>Total HT des devis en attente</td>
+	<td style='text-align:left;'><%= format("%.2f", @total_devi_attente) %> €</td>
+  </tr>
+  
+</table>
+
+<br />
+
+<% unless params[:client_id].nil? %>
+	<%= link_to image_tag("img_general/deviscreer.png"), {:controller=>"devis", :action=>"new", :client_id=>params[:client_id]}, :title=>"Creer un nouveau devis" %>
+<% end %>

@@ -1,0 +1,42 @@
+  <% if bonlivraison.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(bonlivraison.errors.count, "error") %> prohibited this bonlivraison from being saved:</h2>
+
+      <ul>
+      <% bonlivraison.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+      <div class="actions">
+	      	<p>
+			<%= f.label(:adresselivraison, "Adresse de livraison") %><br>
+			<%= f.text_area(:adresselivraison) %>
+		</p>
+		<p>
+			<%= label_tag("Séléctionner les factures à laquelle vous voulez lier ") %>
+			<ul class='ul_class_list_facture_bonlivraison'>
+				<% bonlivraison.devi.factures.all.collect { |facture| %>
+					<% content_tag_for :li, facture do %>
+						<%= facture.numfacture %> : <%= check_box_tag("bonlivraison[facture_ids][]", facture.id, @bonlivraison.factures.include?(facture), :class=>"class_list_facture") %>
+					<% end %>
+				<% } %>
+			</ul>
+		</p>	
+
+		<p>
+			<table id='id_tab_list_bonlivraison' class='tab_class_list' cellpadding='0' border='0' cellspacing='0' width='50%'>
+				<tbody id='id_tbody_information_tableau' class='tbody_class_information_tableau'>
+					<tr class='table_tr_class_contenu' id='id_information_tableau'>
+						<td>Désignation</td>
+						<td class='td_fin_colonne_table'></td>
+					</tr>
+				</tbody>
+
+				<%= render(:partial => "/bonlivraisons/templates/list_factures_table_pvrecettes", :locals => {:factures=>bonlivraison.factures}) %>
+			</table>
+		</p>
+
+	</div>

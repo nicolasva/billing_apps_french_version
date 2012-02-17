@@ -1,0 +1,21 @@
+<tbody id='id_contenu_information_tableau'>
+<% factures.each{ |facture| %>
+	<% content_tag_for :tr, facture, :class=>"table_tr_class_contenu" do %>
+		<% content_tag_for :td, facture do %>
+			<% content_tag_for :ul, facture do %>
+				<% facture.devi.informationlignes.each{ |informationligne| %>
+					<% content_tag_for :li, informationligne do %>
+						<%= informationligne.name %>
+					<% end %>
+				<% } %>
+			<% end %>
+		<% end %>
+		<td class='td_fin_colonne_table'>
+		</td>
+	<% end %>
+<% } %>
+<tr class='table_tr_class_contenu'>
+		<td>Total TTC (en euros)</td>
+		<td class='td_fin_colonne_table'><%= format("%.2f", total_ttc_bonlivraison(factures)) %></td>
+</tr>
+</tbody>

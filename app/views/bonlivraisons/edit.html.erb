@@ -1,0 +1,7 @@
+<h1>Editing bonlivraison</h1>
+
+<%= form_for(@bonlivraison) do |f| %>
+	<%= render(:partial => "form", :locals => {:f => f, :bonlivraison => @bonlivraison}) %>
+
+		<%= f.submit("Mettre à jour ce bon de livraison") %>
+<% end %>

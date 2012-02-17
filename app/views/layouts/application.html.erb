@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Comptatharsis</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults, "lowpro", "common" %>
+  <%= stylesheet_link_tag "factures/rapports/style" if request.request_uri == "/rapports" || request.request_uri == "/downloadrapports" || (!request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0].nil? &&  (request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/rapports" || request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/downloadrapports")) %>
+  <%= stylesheet_link_tag "tablecssgeneral/style" %>
+  <%= stylesheet_link_tag "devis/style" if controller_name == "devis" %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<% unless controller_name == "sessions" %>
+<div class='div_class_header'>
+	<ul>
+		<li>
+			<%= get_url_back(request.referrer) %>
+		</li>
+
+		<li>
+		<%= link_to image_tag("img_general/client.png", :size=>"68x68"), root_path, :title=>"Retourner à la liste des clients" %>
+		</li>
+
+		<% if get_controller_name_link_menu(controller_name,controller.action_name) %>
+			<li>
+			<%= 
+				get_controller_name_link_menu(controller_name,controller.action_name) 
+			%>	
+			</li>
+		<% end %>
+
+		<li>
+			<%= link_to image_tag("img_general/facture.png", :size=>"68x68"), factures_url, :title=>"Liste de l'ensemble des factures" %>
+		</li>
+
+		<li>
+			<%= link_to image_tag("img_general/pv_recettes.png"), pvrecettes_url, :title=>"Liste des pv de recettes" %>
+		</li>
+
+
+		<% if controller_name == "factures" && controller.action_name == "index" && !params[:devi_id].nil? %>
+			<li>
+			<%= link_to image_tag("img_general/creation_pv_recettes.png"), {:controller=>"pvrecettes", :action=>"new", :devi_id=>Devi.find(params[:devi_id])}, :title=>"Creer un nouveau pv de recettes" %> 
+			</li>
+		<% end %>
+
+		<li>
+			<%= link_to image_tag("img_general/bon_de_commande.png"), bonlivraisons_url, :title=>"Liste des bons de livraisons" %>
+		</li>
+
+		<li>
+			<%= link_to image_tag("img_general/icone_rapport_gen.png", :size=>"68x68"), "/rapports?year=#{Time.now.strftime("%Y")}", :title=>"Rapports" %> 
+		</li>
+
+		<li>
+			<%= link_to image_tag("img_general/avoir.png", :size=>"68x68"), avoirs_url, :title=>"Liste des avoirs" %>
+		</li>
+
+		<li>
+			<%= link_to "Deconnection", destroy_user_session_path %>
+		</li>
+
+	</ul>	
+</div>
+
+<% end %>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<div class='div_class_corps_no_margin'>	
+	<%= yield %>
+</div>
+</body>
+</html>

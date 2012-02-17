@@ -1,0 +1,36 @@
+  <% if avoir.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@avoir.errors.count, "error") %> prohibited this avoir from being saved:</h2>
+
+      <ul>
+      <% avoir.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class='actions'>
+	<p>
+		<table class='tab_class_list' cellpadding='0' border='0' cellspacing='0' width='50%'>
+			<tr class='table_tr_class_contenu'>
+				<td>Désignation</td>
+				<td class='td_fin_colonne_table' class='td_fin_colonne_table'>En Euros</td>
+			</tr>
+			<tr class='table_tr_class_contenu'>
+				<td><%= f.text_field(:designation) %></td>
+				<td class='class_prices_to_avoir'><%= f.text_field(:price) %></td>
+			</tr>
+
+			<tr class='table_tr_class_contenu'>
+				<td>Total TVA (19.6%)</td>
+				<td id='id_price_avoir_total_tva' class='td_fin_colonne_table'><%= avoir.price * 19.6/100 %></td>
+			</tr>
+
+			<tr class='table_tr_class_contenu'>
+				<td>Total TTC</td>
+				<td id='id_price_avoir_total_ttc' class='td_fin_colonne_table'><%= (avoir.price * 19.6/100) + avoir.price %></td>
+			</tr>
+		</table>
+  	</p>
+  </div>

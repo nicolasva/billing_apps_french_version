@@ -1,0 +1,10 @@
+<h1>Edition du devis (<%= @devi.client.nameentreprise %>)</h1>
+
+<%= form_for(@devi) do |f| %>
+	<%= render(:partial => "/devis/templates/error_form_devi", :locals => {:devi=>@devi}) %>
+	<%= render(:partial => "/devis/templates/form", :locals => {:f => f}) %>
+	
+	<div class='actions'>
+		<%= f.submit "Mettre à jour" %>
+	</div>
+<% end %>

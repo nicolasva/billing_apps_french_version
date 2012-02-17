@@ -1,0 +1,11 @@
+  <% if devi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(devi.errors.count, "error") %> prohibited this devi from being saved:</h2>
+
+      <ul>
+      <% devi.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>

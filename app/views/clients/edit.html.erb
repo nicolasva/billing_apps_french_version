@@ -1,0 +1,7 @@
+<h1>Edition du client</h1>
+
+<%= form_for(@client) do |f| %>
+	<%= render(:partial => "form", :locals => {:f => f}) %>
+	
+	<%= f.submit "Mettre à jour" %>
+<% end %>

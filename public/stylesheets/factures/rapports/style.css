@@ -1,0 +1,31 @@
+table.table_chiffres_affaires_total
+{
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+
+table.table_chiffres_affaires_total tr td.td_class_taille_first_colonne
+{
+	width: 40%;
+}
+
+table.table_chiffres_affaires_total tr td
+{
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+}
+
+table.table_chiffres_affaires_total tr#id_phrase_chiffre_affaires_ht_ttc
+{
+	background-color: black;
+	color: white;
+}
+
+ol li {
+	list-style-type: none;
+}
+
+ol li ul li
+{
+	list-style-type: circle; 
+}

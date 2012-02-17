@@ -1,0 +1,37 @@
+<h1>Liste des bons de livraisons <%= params[:devi_id].nil? ? "" : "correspondant au devis #{Devi.find(params[:devi_id]).numdevis}" %>
+	<%= params[:devi_id].nil? ? link_to("<", :controller=>"bonlivraisons" ,:action=>"index", :year=>(params[:year].nil? ? Time.now().strftime("%Y").to_i - 1 : params[:year].to_i - 1)) : link_to("<", :controller=>"bonlivraisons" ,:action=>"index", :year=>(params[:year].nil? ? Time.now().strftime("%Y").to_i - 1 : params[:year].to_i - 1), :devi_id=>params[:devi_id]) %> <%= params[:year].nil? ? Time.now().strftime("%Y") : params[:year].to_i %> <%= !params[:year].nil? && Time.now.strftime("%Y").to_i != params[:year].to_i ? (params[:devi_id].nil? ? link_to(">", :controller=>"bonlivraisons", :action=>"index", :year=>(params[:year].to_i + 1)) : link_to(">", :controller=>"bonlivraisons", :action=>"index", :year=>(params[:year].to_i + 1), :devi_id=>params[:devi_id])) : "" %> 
+</h1>
+
+<table width='82.5%' class='tab_class_list' cellpadding='0' border='0' cellspacing='0'>
+  <tr class='table_tr_class_contenu'>
+    <td width='20%'>N° du bon de livraison</td>
+    <td width='20%'>N° devis</td>
+    <td width='20%'>Liste des numéros de facture</td>
+    <td width='7.5%'>PDF</td>
+    <td width='7.5%'>Edition</td>
+    <td class='td_fin_colonne_table' width='7.5%'>Supression</td>
+  </tr>
+
+<% @bonlivraisons.each do |bonlivraison| %>
+  <tr class='table_tr_class_contenu'>
+    <td><%= bonlivraison.numlivraison %></td>
+    <td><%= bonlivraison.devi.numdevis %></td>
+    <td width='20%'>
+	    <ul>
+		    <% bonlivraison.factures.each{ |facture| %>
+		    	<% content_tag_for :li, facture do %>
+				<%= facture.numfacture %>
+			<% end %>
+		    <% } %>
+	    </ul>
+    </td>
+    <td><%= link_to image_tag("img_general/icone_pdf.png", :size=>"20x20"), "bonlivraisons/#{bonlivraison.numlivraison}.pdf?bonlivraison_id=#{bonlivraison.id}", :title=>"Afficher le pdf de ce bon de livraison" %></td>
+    <td><%= link_to image_tag("img_general/icone_edition.png", :size=>"20x20"), edit_bonlivraison_path(bonlivraison) %></td>
+    <td class='td_fin_colonne_table'><%= link_to image_tag("img_general/bin.png", :size=>"20x20"), bonlivraison, :confirm => 'Etes-vous sur de vouloir supprimer ce bon de livraison ?', :method => :delete, :title=>"Supprimer ce bon de livraison" %></td>
+  </tr>
+<% end %>
+</table>
+
+<% 
+	#link_to 'New Bonlivraison', new_bonlivraison_path 
+%>

@@ -1,0 +1,16 @@
+<h1>Nouveau pv de recettes</h1>
+
+<%= form_for(@pvrecette) do |f| %>
+	<%= render(:partial => "form", :locals => {:f => f, :pvrecette=>@pvrecette}) %>
+
+	<div class='class_submit_form'>
+		<%= f.submit("Enregistrer") %>
+	</div>
+<% end %>
+<% 
+	#link_to 'Show |', @pvrecette 
+%>
+
+<% 
+	#link_to 'Back', pvrecettes_path 
+%>

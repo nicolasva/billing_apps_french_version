@@ -1,0 +1,15 @@
+<% form_for :factures, :url => "/generateallfactures" do |f| %>
+	<p>
+		<%= f.label(:datepaiement_on, "Choisissez une date de début pour télécharger vos factures") %>	
+		<br>
+		<%= f.date_select(:datepaiement_on, :order=>[:day, :month, :year], :limit=>[:day, :month, :year], :default => {:day => 1, :month => @time_min.month, :year => @time_min.year}) %>
+	</p>
+
+	<p>
+	<%= f.label(:datepaiement_at, "Choisissez une date de fin pour télécharger vos factures") %>
+	<br>
+	<%= f.date_select(:datepaiement_at, :order=>[:day, :month, :year], :default=> {:day =>31, :month => 12, :year=>@time_now.year}) %>
+	</p>
+
+	<%= f.submit "Générer le zip avec tout les PDFS" %>
+<% end %>

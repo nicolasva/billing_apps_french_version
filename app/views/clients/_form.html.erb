@@ -1,0 +1,44 @@
+  <% if @client.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@client.errors.count, "error") %> prohibited this client from being saved:</h2>
+
+      <ul>
+      <% @client.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+ <% end %>
+
+    <p>
+ 	<%= f.label(:numclient, "Numéro du client")	%><br>
+	<%= f.text_field(:numclient) %>
+    </p>
+
+    <p>
+ 	<%= f.label(:nameentreprise, "Nom de l'entreprise") %><br>
+	<%= f.text_field(:nameentreprise) %>
+    </p>
+
+    <p>
+	<%= f.label(:adresse, "Adresse") %><br>
+	<%= f.text_area(:adresse) %>
+    </p>
+
+    <p>
+        <%= f.label(:namerefcontact, "Nom du contact référent") %><br>
+	<%= f.text_field(:namerefcontact) %>
+    </p>
+
+    <p>
+    	<%= f.label(:tva_intra, "Numéro de TVA intracommunautaire") %><br>
+	<%= f.text_field(:tva_intra) %>
+    </p>
+
+    <p>
+    	<%= f.label(:affacturage) %>
+	<%= f.check_box(:affacturage) %>
+    </p>
+
+
+

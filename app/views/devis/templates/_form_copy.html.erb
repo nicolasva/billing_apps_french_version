@@ -1,0 +1,8 @@
+<p>
+<%= f.hidden_field :devi_id_copy %>
+</p>
+
+<p>
+	<%= f.label(:client_id) %><br>
+	<%= f.select(:client_id, Client.all.collect{ |client| [client.nameentreprise, client.id]}) %>
+</p>

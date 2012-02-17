@@ -1,0 +1,27 @@
+<h1>Liste des avoirs <%= params[:facture_id].nil? ? "" : "correspondant à la facture #{Facture.find(params[:facture_id]).numfacture}" %><%= params[:facture_id].nil? ? link_to("<", :controller=>"avoirs" ,:action=>"index", :year=>(params[:year].nil? ? Time.now().strftime("%Y").to_i - 1 : params[:year].to_i - 1)) : link_to("<", :controller=>"avoirs" ,:action=>"index", :year=>(params[:year].nil? ? Time.now().strftime("%Y").to_i - 1 : params[:year].to_i - 1), :facture_id=>params[:facture_id]) %> <%= params[:year].nil? ? Time.now().strftime("%Y") : params[:year].to_i %> <%= !params[:year].nil? && Time.now.strftime("%Y").to_i != params[:year].to_i ? (params[:facture_id].nil? ? link_to(">", :controller=>"avoirs", :action=>"index", :year=>(params[:year].to_i + 1)) : link_to(">", :controller=>"avoirs", :action=>"index", :year=>(params[:year].to_i + 1), :facture_id=>params[:facture_id])) : ""  %></h1>
+
+<table width='70%' class='tab_class_list' cellpadding='0' border='0' cellspacing='0'>
+  <tr class='table_tr_class_contenu'>
+    <td width='30%'>N° avoir</td>
+    <td width='30%'>N° facture</td>
+    <td width='10%'>PDF</td>
+    <td width='10%'>Edition</td>
+    <td width='10%' class='td_fin_colonne_table'>Supression</td>
+  </tr>
+
+<% @avoirs.each do |avoir| %>
+  <tr class='table_tr_class_contenu'>
+    <td><%= avoir.numavoir %></td>
+    <td><%= avoir.facture.numfacture %></td>
+    <td><%= link_to image_tag("img_general/icone_pdf.png", :size=>"20x20"), "avoirs/#{avoir.numavoir}.pdf?avoir_id=#{avoir.id}" %></td>
+    <td><%= link_to image_tag("img_general/icone_edition.png", :size=>"20x20"), edit_avoir_path(avoir) %></td>
+    <td class='td_fin_colonne_table'><%= link_to image_tag("img_general/close.gif"), avoir, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% 
+	#link_to 'New Avoir', new_avoir_path 
+%>

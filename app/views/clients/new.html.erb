@@ -1,0 +1,9 @@
+<h1>Nouveau client</h1>
+
+<%= form_for(@client) do |f| %>	
+	<%= render(:partial => "form", :locals => {:f => f}) %>
+	
+  	<div class="actions">
+    		<%= f.submit "Valider" %>
+  	</div>
+<% end %>

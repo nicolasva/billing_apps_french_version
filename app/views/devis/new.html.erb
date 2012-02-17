@@ -1,0 +1,14 @@
+<h1><%= params[:devi_id].nil? ? "Nouveau" : "Copie du" %> devis</h1>
+
+<%= form_for(@devi) do |f| %>
+	<%= render(:partial => "/devis/templates/error_form_devi", :locals => {:devi=>@devi}) %>
+      <% if params[:devi_id_copy].nil? %>
+	      <%= render(:partial => "/devis/templates/form", :locals => {:f => f}) %>
+      <% else %>
+	      <%= render(:partial => "/devis/templates/form_copy", :locals => {:f => f}) %>
+      <% end %>
+
+  	<div class="actions">
+    		<%= f.submit "Valider" %>
+  	</div>
+<% end %>

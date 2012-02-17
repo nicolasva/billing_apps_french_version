@@ -1,0 +1,5 @@
+<% if request.request_uri != "/allfactures" && (request.request_uri == "/rapports" || request.request_uri == "/downloadrapports" || request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/rapports" || request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/downloadrapports") %>
+        <%= render(:partial => "/factures/templates/lists_details_rapports") %>
+<% else %>
+	<%= render(:partial => "/factures/templates/form_download_allfactures") %>
+<% end %>

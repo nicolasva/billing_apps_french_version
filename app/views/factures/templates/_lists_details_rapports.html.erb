@@ -1,0 +1,156 @@
+<div class='class_bilan_gen'>
+   <ol>
+	<li>
+	  <h1>Chiffre d'affaire HT & TTC</h1>
+	  <ul>
+		<li>
+			<h2>
+				<%= link_to "<", "/rapports?year=#{params[:year].nil? ? Time.now().strftime("%Y") : params[:year].to_i - 1}" %> <%= params[:year].nil? ? Time.now().strftime("%Y") : params[:year].to_i %> <%= link_to ">", "/rapports?year=#{params[:year].nil? ? Time.now().strftime("%Y") : params[:year].to_i + 1 }" if !params[:year].nil? && params[:year].to_i < Time.now().strftime("%Y").to_i %>
+			</h2>
+		</li>
+
+		<li>
+			<h3>Total sur l'année</h3>
+			<table cellspacing='0' cellpadding='0' width='100%' class='table_chiffres_affaires_total'>
+				<tr id='id_phrase_chiffre_affaires_ht_ttc'>
+					<td class='td_class_taille_first_colonne'></td>
+					<td>Chiffres d'affaires HT</td>
+					<td>Chiffres d'affaires TTC</td>
+				</tr>
+				<tr>
+					<td>Total</td> <td><%= format("%.2f", get_total_all_facture_ht_ttc(@factures)[0]) %> €</td> <td><%= format("%.2f", @tab_result_facture_ttc_ht[1]) %> €</td>
+				</tr>
+			</table>
+		</li>
+
+		<li>
+			<h3>Par mois</h3>
+			<table cellspacing='0' cellpadding='0' width='100%' class='table_chiffres_affaires_total'>	
+				<% 0.upto(@tab_result_facture_ttc_ht_by_month.length-1){ |i| %>
+					<tr>
+						<td class='td_class_taille_first_colonne'>
+							<%= month?(i.to_i) %>
+						</td>
+
+						<td>
+							<%= format("%.2f", @tab_result_facture_ttc_ht_by_month[i]["total_facture_ht"]) %> €
+						</td>
+
+						<td>
+							<%= format("%.2f", @tab_result_facture_ttc_ht_by_month[i]["total_facture_ttc"]) %> €
+
+						</td>
+					</tr>
+				<% } %>
+			</table>
+		</li>
+
+		<li>
+			<h3>Par clients</h3>
+			<table cellspacing='0' cellpadding='0' width='100%' class='table_chiffres_affaires_total'>
+				<% 
+					#@hash_name_client.each{ |key, value| 
+				%>
+			      <% 0.upto(@tab_facture_name_client.length-1){ |i| %>	      
+			      <tr>
+					  <td class='td_class_taille_first_colonne'>
+						  <%= @tab_facture_name_client[i] %>
+					  </td>
+					
+					  <td>
+						  <%= format("%.2f", @hash_name_client[@tab_facture_name_client[i]]["total_facture_ht"]) %>
+					  </td>
+
+					  <td>
+						  <%= format("%.2f", @hash_name_client[@tab_facture_name_client[i]]["total_facture_ttc"]) %>
+					  </td>
+
+				  </tr>
+			      <% } %>
+
+			     <% 
+				     #} 
+			     %>
+			</table>
+		</li>
+	   </ul>
+  	</li>
+	<li>
+		<h1>Chiffre d'affaire encaissé HT & TTC</h1>
+		<ul>
+			<li>
+				<h3>Total sur l'année</h3>
+				<table cellspacing='0' cellpadding='0' width='100%' class='table_chiffres_affaires_total'>
+					<tr id='id_phrase_chiffre_affaires_ht_ttc'>
+						<td class='td_class_taille_first_colonne'></td>
+						<td>Chiffres d'affaires HT</td>
+						<td>Chiffres d'affaires TTC</td>
+					</tr>
+
+					<tr>
+						<td>Total</td>
+						<td><%= format("%.2f", get_total_facture_encaisse_ht_ttc(@factures_encaisses)[0]) %></td>
+						<td><%= format("%.2f", @tab_result_facture_encaisse_ttc_ht[1]) %></td>
+					</tr>
+				</table>
+			</li>
+
+			<li>
+				<h3>Par mois</h3>
+				<table cellspacing='0' cellpadding='0' width='100%' class='table_chiffres_affaires_total'>
+				    <% 0.upto(@tab_result_facture_encaisse_ttc_ht_by_month.length-1){ |i| %>
+					<tr>
+						<td class='td_class_taille_first_colonne'>
+							<%= month?(i.to_i) %>
+						</td>
+
+						<td>
+							<%= format("%.2f", @tab_result_facture_encaisse_ttc_ht_by_month[i]["total_facture_ht"]) %> €
+						</td>
+
+						<td>
+							<%= format("%.2f", @tab_result_facture_encaisse_ttc_ht_by_month[i]["total_facture_ttc"]) %> €
+
+						</td>
+					</tr>
+				     <% } %>
+				</table>
+			</li>
+
+			<li>
+				<h3>Par clients</h3>
+
+				<table cellspacing='0' cellpadding='0' width='100%' class='table_chiffres_affaires_total'>
+			      	<% 
+					#@hash_name_client_facture_encaisse.each{ |key, value| 
+				%>	
+			         <% 0.upto(@tab_facture_name_client.length-1){ |i| %>	      
+				  <tr>
+					  <td class='td_class_taille_first_colonne'>
+						  <%= @tab_facture_name_client[i] %>
+					  </td>
+					
+					  <td>
+						  <%= format("%.2f", @hash_name_client_facture_encaisse[@tab_facture_name_client[i]]["total_facture_ht"]) %>
+					  </td>
+
+					  <td>
+						  <%= format("%.2f", @hash_name_client_facture_encaisse[@tab_facture_name_client[i]]["total_facture_ttc"]) %>
+					  </td>
+
+				  </tr>
+			        <% } %>
+			      </table>
+			</li>
+		</ul>
+	</li>
+	<li style='text-align:center;'>
+		<%= link_to image_tag("img_general/logo-excel.png", :size=>"68x68"), "/downloadrapports?year=#{@year_params}", :title=>"Télécharger le rapport" %>
+	</li>
+     </ol>
+</div>
+
+      <% if request.request_uri != "/rapports" && (request.request_uri == "/downloadrapports" || (request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/downloadrapports")) %>
+	<% set_rapport_xls %>		
+	<% @controller.redirection_download_excel %>
+      <% end %>

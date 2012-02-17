@@ -1,0 +1,17 @@
+<h1>Nouvelle facture</h1>
+
+<table>
+	<% Facture.find(:all, :conditions=>{:devi_id=>params[:devi_id]}).each{ |facture| %>
+		<tr>
+			<%= render(:partial => "factures/templates/tab_liste_factures", :locals => {:facture=>facture, :numdevis=>false}) %>
+		</tr>
+	<% } %>
+</table>
+
+<%= form_for(@facture) do |f| %>
+  	<%= render(:partial => "form", :locals => {:f => f, :facture=>@facture}) %>
+	<div class='actions'>
+		<%= f.submit "Enregistrer" %>
+	</div>
+<% end %>
+

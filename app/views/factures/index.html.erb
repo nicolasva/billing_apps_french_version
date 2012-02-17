@@ -1,0 +1,56 @@
+<%= link_to "Téléchargements des factures", "/allfactures" %>
+<h1>Liste des factures <%= params[:devi_id].nil? ? "" : "correspondant au devis #{Devi.find(params[:devi_id]).numdevis}" %><%= params[:devi_id].nil? ? (params[:client_id].nil? ? link_to("<", :controller=>"factures" ,:action=>"index", :year=>(params[:year].nil? ? Time.now().strftime("%Y").to_i - 1 : params[:year].to_i - 1)) : link_to("<", :controller=>"factures" ,:action=>"index", :year=>(params[:year].nil? ? Time.now().strftime("%Y").to_i - 1 : params[:year].to_i - 1), :client_id=>params[:client_id])) : link_to("<", :controller=>"factures" ,:action=>"index", :year=>(params[:year].nil? ? Time.now().strftime("%Y").to_i - 1 : params[:year].to_i - 1), :devi_id=>params[:devi_id]) %> <%= params[:year].nil? ? Time.now().strftime("%Y") : params[:year].to_i %> <%= !params[:year].nil? && Time.now.strftime("%Y").to_i != params[:year].to_i ? (params[:devi_id].nil? ? (params[:client_id].nil? ? link_to(">", :controller=>"factures", :action=>"index", :year=>(params[:year].to_i + 1)) : link_to(">", :controller=>"factures", :action=>"index", :year=>(params[:year].to_i + 1), :client_id=>params[:client_id])) : link_to(">", :controller=>"factures", :action=>"index", :year=>(params[:year].to_i + 1))) : "" %></h1>
+
+<table width='100%' class='tab_class_list' cellpadding='0' border='0' cellspacing='0'>
+  <tr class='table_tr_class_contenu'>
+	  <td>N° facture</td>
+	  <td>N° devis</td>
+	  <td>Nom de l'entreprise</td>
+	  <td style='text-align:right;padding-right:30px;'>HT Devis</td>
+	  <td style='padding-left:5px;'>Pourcentage</td>
+	  <td>Apercu description</td>
+	  <td style='text-align:right;padding-right:30px;'>HT facture</td>
+	  <td style='text-align:right;padding-right:30px;'>TTC facture</td>
+	  <td style='padding-left:5px;'>Date de paiment</td>
+	  <td>Date facture</td>
+	  <td>PDF</td>
+	  <td>Edition</td>
+	  <td>Supression</td>
+	  <td>Liste des avoirs</td>
+	  <td class='td_fin_colonne_table'>Création d'un avoir</td>
+	  <%
+	  	#<td>Voir les avoirs pour cette factures</td>
+	  	#<td>Creer un avoir pour cette facture</td>
+	  %>	
+   </tr>
+
+<% @factures.each do |facture| %>
+   <tr class='table_tr_class_contenu' style='background-color:<%= !flash[:id_facture].nil? && flash[:id_facture].to_i == facture.id ? "#FEF680" : "" %>;color:<%= facture.annulation || facture.proforma ? "silver" : "black" %>;'>
+	  <%= render(:partial => "factures/templates/tab_liste_factures", :locals => {:facture=>facture, :numdevis=>true}) %>
+    <% 
+    #link_to 'Destroy', facture, :confirm => 'Are you sure?', :method => :delete 
+    %>
+  </tr>
+<% end %>
+  <tr style='height:50px;'>
+  </tr>
+  <tr style='font-weight:bold;'>
+	  <td colspan='6' style='text-align:right;padding-right:50px;'>Total</td>
+	  <td style='padding-left:20px;'><%= format("%.2f", @total_facture_ht) %> €</td>
+  	  <td colspan='5' style='padding-left:28px;'><%= format("%.2f", @total_facture_ttc) %> €</td>
+  </tr>
+  <tr style='font-weight:bold;'>
+	  <td colspan='6' style='text-align:right;padding-right:50px;'>Total en attente de paiment</td>
+	  <td style='padding-left:20px;'><%= format("%.2f", @total_facture_attente_paiement_ht) %> €</td>
+  	  <td colspan='5' style='padding-left:28px;'><%= format("%.2f", @total_facture_attente_paiement_ttc) %> €</td>
+  </tr>
+
+  <tr style='font-weight:bold;'>
+	  <td colspan='6' style='text-align:right;padding-right:50px;'>Total des factures payées</td>
+	  <td style='padding-left:20px;'><%= format("%.2f", @total_facture_paiement_ht) %> €</td>
+  	  <td colspan='5' style='padding-left:28px;'><%= format("%.2f", @total_facture_paiement_ttc) %> €</td>
+  </tr>
+</table>
+<% if params[:devi_id] %>
+	<%= link_to image_tag("img_general/facturecreer.png"), {:controller=>"factures", :action=>"new", :devi_id=>params[:devi_id]}, :title=>"Creer une nouvelle facture" %>
+<% end %>

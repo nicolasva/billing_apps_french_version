@@ -1,0 +1,19 @@
+<h1>Editer cette avoir</h1>
+
+
+<div class='div_class_information_facture'>
+	Information sur la facture liée :
+	<ul>
+		<li>Numéro de la facture lié : <%= @avoir.facture.numfacture %></li>
+		<li>Montant Hors taxe de la facture : <%=format("%.2f", get_facture_ht(@avoir.facture)) %> </li>
+	</ul>
+</div>
+
+<p>
+Vous éditez l'avoir <%= @avoir.numavoir %>
+</p>
+<%= form_for(@avoir) do |f| %>
+  	<%= render(:partial => "form", :locals => {:f => f, :avoir=>@avoir}) %>
+
+		<%= f.submit("Mettre à jour cette avoir") %>
+	<% end %>

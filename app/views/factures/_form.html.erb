@@ -1,0 +1,63 @@
+  <% if facture.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(facture.errors.count, "error") %> prohibited this facture from being saved:</h2>
+
+      <ul>
+      <% facture.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :devi_id %>
+  <p>
+	<%= f.label(:created_at, "Crée le") %><br>
+	<%= f.date_select(:created_at, :order => [:day, :month, :year]) %>
+  </p>
+  <p>
+  	<%= f.label(:datepaiementcheck, "Date de paiement") %> <%= f.check_box(:datepaiementcheck) %>
+	<div id='id_div_datepaiementcheck' style='display:<%= facture.datepaiementcheck ? "block" : "none" %>'>
+  		<%= f.label(:datepaiement, "Séléctionner le date de paiement") %><br>
+		<%= f.date_select(:datepaiement, :order => [:day, :month, :year]) %>
+	</div>
+  </p>
+
+
+
+  <p>
+    	<%= f.label(:numfacture) %><br>
+	<%= f.text_field(:numfacture) %>
+  </p>
+
+
+  <p>
+  	<%= f.label(:proforma, "Pro Forma") %>
+	<%= f.check_box(:proforma) %>
+  </p>
+
+  <p>
+  	<%= f.label(:annulation) %>
+  	<%= f.check_box(:annulation) %>
+  </p>
+
+
+  <p>
+	<%= f.label(:numcommande, "Options") %><br>
+	<%= f.text_area(:numcommande, :rows=>8) %>
+  </p>
+
+  <p>
+  	<%= f.label(:choixrib, "RIB") %><br>
+	<%= f.select(:choixrib, [["Tharsis","rib"],["factobail","factobail"]]) %>
+  </p>
+
+  <p>
+  	<%= f.label(:accompte, "acompte") %><br>
+	  <%= f.select(:accompte, get_form_select_accompte) %> %
+  </p>
+
+  <p>
+	<%= f.label(:cond_reglement, "Conditions de paiement") %><br>
+	<%= f.select(:cond_reglement, [["net dans 30 jours.", "net dans 30 jours."], ["net à réception de la facture.", "net à réception de la facture."]]) %>	
+  </p>

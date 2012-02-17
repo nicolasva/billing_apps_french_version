@@ -1,0 +1,8 @@
+<h1>Editer la facture</h1>
+
+<%= form_for(@facture) do |f| %>
+  	<%= render(:partial => "form", :locals => {:f => f, :facture=>@facture}) %>
+  <div class="actions">
+  	<%= f.submit("mettre à jour cette facture") %>
+  </div>
+<% end %>

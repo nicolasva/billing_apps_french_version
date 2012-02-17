@@ -1,0 +1,49 @@
+  <% if @pvrecette.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pvrecette.errors.count, "error") %> prohibited this pvrecette from being saved:</h2>
+
+      <ul>
+      <% @pvrecette.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+	  <div class='div_class_list_facture'>
+	     <ul id='ul_id_list_facture'>
+	  	<% @pvrecette.devi.factures.all.collect { |facture| %>
+			<% content_tag_for :li, facture do %>
+				<%= facture.numfacture %> : <%= check_box_tag("pvrecette[facture_ids][]", facture.id, @pvrecette.factures.include?(facture), :class=>"class_list_facture") %>
+			<% end %>
+		<% } %>
+		<li><%= label_tag("Tout cocher : ") %><%= check_box_tag("check_all_checkbox_factures", "checked_all", all_facture_check?(@pvrecette)) %></li>
+	      </ul>  	
+           </div>
+
+	<p>
+		<table class='tab_class_list' cellpadding='0' border='0' cellspacing='0' width='50%'>
+			<tr class='table_tr_class_contenu'>
+				<td>Désignation</td>
+				<td class='td_fin_colonne_table'>Total</td>
+			</tr>
+			<%= f.fields_for(:devi, @pvrecette.devi) do |devi_field| %>
+				<tr class='table_tr_class_contenu'>
+					<td>
+						<%= devi_field.text_area :description %>
+					</td>
+					<td class='td_fin_colonne_table'>
+					</td>
+				</tr>
+			<% end %>
+			<tr class='table_tr_class_contenu'>
+				<td>TOTAL HT</td><td class='td_fin_colonne_table' id='id_total_ht'><%= format("%.2f", get_pvrecette_ttc(@pvrecette.factures)[1]) %></td>
+			</tr>
+			<tr class='table_tr_class_contenu'>
+				<td>TOTAL TTC</td><td class='td_fin_colonne_table' id='id_total_ttc'><%= format("%.2f", @total_facture_ttc) %></td>
+			</tr>
+		</table>
+
+	</p>
+  </div>
