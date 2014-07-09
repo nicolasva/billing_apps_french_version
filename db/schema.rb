@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110729135741) do
+ActiveRecord::Schema.define(:version => 20140709140044) do
 
   create_table "avoirs", :force => true do |t|
     t.float    "price",       :default => 0.0
