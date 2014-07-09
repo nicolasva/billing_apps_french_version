@@ -18,6 +18,10 @@ gem 'spreadsheet'
 gem 'bullet'
 gem 'rubyzip'
 gem 'rdoc'
+
+group :production do
+  gem 'passenger'
+end
 #gem 'will_paginate'
 # Use unicorn as the web server
 # gem 'unicorn'
