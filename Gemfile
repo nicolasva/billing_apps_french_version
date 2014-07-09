@@ -20,7 +20,7 @@ gem 'rubyzip'
 gem 'rdoc'
 
 group :production do
-  gem 'passenger'
+  gem 'passenger', '4.0.29'
 end
 #gem 'will_paginate'
 # Use unicorn as the web server
