@@ -1,6 +1,6 @@
 Comptatharsis::Application.routes.draw do
   devise_for :users do 
- 	get "/log", :to => "devise/sessions#new" 
+  	get "/log", :to => "devise/sessions#new" 
   end
 
   root :to => "clients#index"

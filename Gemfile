@@ -1,12 +1,13 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'devise'
+gem 'bundler'
 #gem 'authlogic'
 gem 'spreadsheet'
 #gem 'iconv'
@@ -18,6 +19,8 @@ gem 'spreadsheet'
 gem 'bullet'
 gem 'rubyzip'
 gem 'rdoc'
+gem 'railties'
+gem 'prototype-rails'
 
 group :production do
   gem 'passenger', '4.0.29'
