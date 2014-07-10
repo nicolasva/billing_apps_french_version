@@ -3160,3 +3160,41 @@ Processing by ClientsController#index as HTML
   [1m[36mClient Load (0.1ms)[0m  [1mSELECT "clients".* FROM "clients" ORDER BY nameentreprise[0m
   Rendered clients/index.html.erb within layouts/application (0.8ms)
 Completed 200 OK in 15ms (Views: 8.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-07-10 17:21:08 +0200
+Processing by ClientsController#index as HTML
+Completed 401 Unauthorized in 0ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-07-10 17:21:08 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (7.2ms)
+Completed 200 OK in 19ms (Views: 17.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-07-10 17:21:15 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"1rmb6DmxDeSZgFHkn/3T4HCGiYDU/YhMX1B0mUfwcok=", "user"=>{"username"=>"nicolas", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."username" = 'nicolas' LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  UPDATE "users" SET "current_sign_in_at" = '2014-07-10 15:21:16.076175', "sign_in_count" = 2, "updated_at" = '2014-07-10 15:21:16.076988' WHERE "users"."id" = 1
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 80ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-07-10 17:21:16 +0200
+Processing by ClientsController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mClient Load (0.1ms)[0m  [1mSELECT "clients".* FROM "clients" ORDER BY nameentreprise[0m
+  Rendered clients/index.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 9ms (Views: 7.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/clients/devis" for 127.0.0.1 at 2014-07-10 17:21:20 +0200
+Processing by DevisController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE ("devis"."created_at" BETWEEN '2014-01-01 00:00:00' AND '2015-01-01 00:00:00') ORDER BY numdevis[0m
+  Rendered devis/index.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 11ms (Views: 9.7ms | ActiveRecord: 0.2ms)
