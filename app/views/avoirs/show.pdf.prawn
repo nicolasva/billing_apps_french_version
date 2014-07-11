@@ -40,7 +40,7 @@ header = [Prawn::Table::Cell.new(:position => [0,0],
 :font_size => 10),Prawn::Table::Cell.new(:position => [0,0], :width=>0, :text=>"en Euros", :font_size => 10)]
 
 items = [[Prawn::Table::Cell.new(:text => @avoir.designation, :document => self, :font_size=>10),
-	Prawn::Table::Cell.new(:text => @avoir.price, :document => self, :font_size=>10)],[Prawn::Table::Cell.new(:text=>"TOTAL TVA (19.6%)", :document => self, :font_size=>10),Prawn::Table::Cell.new(:text=>"#{format("%.2f",@avoir.price*19.6/100)}", :document => self, :font_size=>10)],[Prawn::Table::Cell.new(:text=>"TOTAL TTC", :document => self, :font_size=>10),Prawn::Table::Cell.new(:text=>"#{format("%.2f", (@avoir.price*19.6/100)+@avoir.price)}", :document => self, :font_size=>10)]]
+	Prawn::Table::Cell.new(:text => @avoir.price, :document => self, :font_size=>10)],[Prawn::Table::Cell.new(:text=>"TOTAL TVA (20%)", :document => self, :font_size=>10),Prawn::Table::Cell.new(:text=>"#{format("%.2f",@avoir.price*20/100)}", :document => self, :font_size=>10)],[Prawn::Table::Cell.new(:text=>"TOTAL TTC", :document => self, :font_size=>10),Prawn::Table::Cell.new(:text=>"#{format("%.2f", (@avoir.price*20/100)+@avoir.price)}", :document => self, :font_size=>10)]]
 
 pdf.bounding_box [0, 350], :width => 530 do
 	pdf.table(items, :border_style => :grid,
@@ -50,7 +50,7 @@ pdf.bounding_box [0, 350], :width => 530 do
 		  :width => 530)
 end
 
-items = [[Prawn::Table::Cell.new(:text => "TOTAL à retirer TTC (TVA 19.6%)"),Prawn::Table::Cell.new(:text=>"#{format("%.2f", (@avoir.price*19.6/100)+@avoir.price)}", :document => self, :font_size=>10)]]
+items = [[Prawn::Table::Cell.new(:text => "TOTAL à retirer TTC (TVA 20%)"),Prawn::Table::Cell.new(:text=>"#{format("%.2f", (@avoir.price*20/100)+@avoir.price)}", :document => self, :font_size=>10)]]
 pdf.bounding_box [0, 230], :width => 530 do
 	pdf.table(items, :border_style => :grid,
 		  :column_widths => {0 => 265, 1 => 265},

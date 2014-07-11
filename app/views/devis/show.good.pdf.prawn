@@ -76,7 +76,7 @@ nb_items = 0
 	#}
 
 	#items += [["HT", @totalsumgeneral]]
-	#items += [["TVA 19,6%", @totalsumgeneral * 0.196], ["TTC", (@totalsumgeneral * 0.196) + @totalsumgeneral]] if @devi.tva?
+	#items += [["TVA 20%", @totalsumgeneral * 0.2], ["TTC", (@totalsumgeneral * 0.2) + @totalsumgeneral]] if @devi.tva?
 
 	
 

@@ -190,19 +190,19 @@ pdf.text "\n\n"
      end 
   if @facture.accompte == 100 
    tva = [[Prawn::Table::Cell.new(
-    :text => "TVA 19,6%", :document => self, :font_style => :bold, :font_size=>10), 
+    :text => "TVA 20%", :document => self, :font_style => :bold, :font_size=>10), 
 	  Prawn::Table::Cell.new(
-    :text => format("%.2f",@totalsumgeneral * 0.196).to_s, :document => self, :font_style => :bold, :font_size=>10)],
+    :text => format("%.2f",@totalsumgeneral * 0.2).to_s, :document => self, :font_style => :bold, :font_size=>10)],
 	  [Prawn::Table::Cell.new(
     :text => "TTC", :document => self, :font_size=>10, :font_style => :bold), Prawn::Table::Cell.new(
-    :text => format("%.2f",(@totalsumgeneral * 0.196) + @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size=>10)
+    :text => format("%.2f",(@totalsumgeneral * 0.2) + @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size=>10)
 		]]
    else	 
         total_accompte = [[Prawn::Table::Cell.new(:text=>"HT (#{@facture.accompte}%)", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(@totalsumgeneral*@facture.accompte)/100)).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
 
-	tva = [[Prawn::Table::Cell.new(:text=>"TVA 19,6%", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*19.6)/100).to_s, :document => self, :font_style => :bold, :font_size => 10)]]
+	tva = [[Prawn::Table::Cell.new(:text=>"TVA 20%", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*20)/100).to_s, :document => self, :font_style => :bold, :font_size => 10)]]
 
-	ttc = [[Prawn::Table::Cell.new(:text=>"TTC", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.196)+((@totalsumgeneral*@facture.accompte)/100))).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
+	ttc = [[Prawn::Table::Cell.new(:text=>"TTC", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100))).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
         tva += ttc 
    end
 	items += total

@@ -132,12 +132,12 @@ pdf.text "\n\n"
    end
  
    tva = [[Prawn::Table::Cell.new(
-    :text => "TVA 19,6%", :document => self, :font_style => :bold, :font_size => 10), 
+    :text => "TVA 20%", :document => self, :font_style => :bold, :font_size => 10), 
 	  Prawn::Table::Cell.new(
-    :text => format("%.2f",@totalsumgeneral * 0.196).to_s, :document => self, :font_size => 10, :font_style => :bold)],
+    :text => format("%.2f",@totalsumgeneral * 0.2).to_s, :document => self, :font_size => 10, :font_style => :bold)],
 	  [Prawn::Table::Cell.new(
     :text => "TTC", :document => self, :font_style => :bold, :font_size => 10), Prawn::Table::Cell.new(
-    :text =>format("%.2f" , (@totalsumgeneral * 0.196) + @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size => 10)
+    :text =>format("%.2f" , (@totalsumgeneral * 0.2) + @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size => 10)
 		]]
 	items += total
         items += totallignedevis unless @devi.lignedevis.empty?

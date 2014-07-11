@@ -126,10 +126,10 @@ Event.addBehavior({
 						liste_tr_table_total_produit[i].getElementsByTagName("td")[1].innerHTML = total;
 
 					if (i == 10)	
-						liste_tr_table_total_produit[i].getElementsByTagName("td")[1].innerHTML = parseFloat(total) * (19.6/100);
+						liste_tr_table_total_produit[i].getElementsByTagName("td")[1].innerHTML = parseFloat(total) * (20/100);
 
 					if (i == 11)
-						liste_tr_table_total_produit[i].getElementsByTagName("td")[1].innerHTML = parseFloat(total) + (parseFloat(total) * (19.6/100));
+						liste_tr_table_total_produit[i].getElementsByTagName("td")[1].innerHTML = parseFloat(total) + (parseFloat(total) * (20/100));
 				//}
 
 				i += 1;
@@ -183,8 +183,8 @@ Event.addBehavior({
 				this.down().value = 0;
 
 		//this.down().value;
-		$("id_price_avoir_total_tva").update(Math.round((parseFloat(this.down().value) * 19.6)/100));
-		$("id_price_avoir_total_ttc").update(Math.round(parseFloat(this.down().value) + (parseFloat(this.down().value) * 19.6)/100));
+		$("id_price_avoir_total_tva").update(Math.round((parseFloat(this.down().value) * 20)/100));
+		$("id_price_avoir_total_ttc").update(Math.round(parseFloat(this.down().value) + (parseFloat(this.down().value) * 20)/100));
 	},
 
 	'ul.ul_class_list_facture_bonlivraison li input:click' : function(e) {	

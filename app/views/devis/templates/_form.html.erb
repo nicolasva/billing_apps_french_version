@@ -150,12 +150,12 @@
 					<td></td>
 				</tr>
 				<tr id='id_tva' style='color:<%= @devi.tva ? 'black' : 'silver' %>;'>
-					<td>TVA 19,6%</td>
-					<td><%= format("%.2f",@totalsumgeneral * 0.196) %></td>
+					<td>TVA 20%</td>
+					<td><%= format("%.2f",@totalsumgeneral * 0.2) %></td>
 				</tr>
 				<tr id='id_ttc' style='color:<%= @devi.tva ? 'black' : 'silver' %>;'>
 					<td>TTC</td>
-					<td><%= format("%.2f",(@totalsumgeneral * 0.196) + @totalsumgeneral) %></td>
+					<td><%= format("%.2f",(@totalsumgeneral * 0.2) + @totalsumgeneral) %></td>
 				</tr>
 		 </table>
 		 <%= f.submit "Ajouter une ligne au total", :name=>"addlignetotal_ligne_total_devisfactures_deviid_#{@devi.id}" %>

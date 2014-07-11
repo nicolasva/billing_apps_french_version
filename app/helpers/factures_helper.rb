@@ -19,18 +19,18 @@ module FacturesHelper
 	def get_facture_ttc(facture)
 	      unless facture.annulation || facture.proforma	
 		@total_facture_ht += (get_ht(facture.devi) * facture.accompte) / 100 
-		@total_facture_ttc += facture.devi.tva ? ((get_facture_ht(facture) * 0.196) + get_facture_ht(facture)) : get_facture_ht(facture) 
+		@total_facture_ttc += facture.devi.tva ? ((get_facture_ht(facture) * 0.2) + get_facture_ht(facture)) : get_facture_ht(facture) 
 	        unless facture.datepaiementcheck 
 			@total_facture_attente_paiement_ht += (get_ht(facture.devi) * facture.accompte) / 100
-	      		@total_facture_attente_paiement_ttc += facture.devi.tva ? ((get_facture_ht(facture) * 0.196) + get_facture_ht(facture)) : get_facture_ht(facture)
+	      		@total_facture_attente_paiement_ttc += facture.devi.tva ? ((get_facture_ht(facture) * 0.2) + get_facture_ht(facture)) : get_facture_ht(facture)
 		end
 
 		if facture.datepaiementcheck
 			@total_facture_paiement_ht += (get_ht(facture.devi) * facture.accompte) / 100
-			@total_facture_paiement_ttc += facture.devi.tva ? ((get_facture_ht(facture) * 0.196) + get_facture_ht(facture)) : get_facture_ht(facture) 
+			@total_facture_paiement_ttc += facture.devi.tva ? ((get_facture_ht(facture) * 0.2) + get_facture_ht(facture)) : get_facture_ht(facture) 
 		end
 	      end
-		facture.devi.tva ? ((get_facture_ht(facture) * 0.196) + get_facture_ht(facture)) : get_facture_ht(facture)
+		facture.devi.tva ? ((get_facture_ht(facture) * 0.2) + get_facture_ht(facture)) : get_facture_ht(facture)
 	end
 
 	def get_total_all_facture_ht_ttc(factures)
@@ -109,7 +109,6 @@ module FacturesHelper
 
 			year_params_last_year = year_params_first_year
 			year_params_first_year = year_params_last_year + 2678400
-			Rails.logger.info "--=-=-=--=-year_params_first_year.day.to_i-=-=-=-=-#{year_params_first_year.day.to_i}"
 			year_params_first_year = Time.local(year_params_first_year.year,year_params_first_year.month,1,0,0,0) if year_params_first_year.day.to_i != 1 
 		}
 		@tab_result_facture_ttc_ht_by_month
