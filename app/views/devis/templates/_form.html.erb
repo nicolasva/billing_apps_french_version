@@ -21,8 +21,8 @@
 
     <ul id='id_information_general'>
 	    <% Information.all.each do |information| %> 
-		    <% content_tag_for :li, information do %>
-			    <%= information.name %>
+        <%= content_tag_for :li, information do %>
+          <%= information.name %>
 			    <table border='1' cellpadding='0' cellspacing='0' width='1100px'>
 				    <tr>	
 					    <td width='350px'>Produit</td>
@@ -35,12 +35,12 @@
 			    </table>
 			         <ol id='informationlignes_informations_<%= information.id %>' class='informationlignes'>
 				   <% @devi.informationlignes.find(:all, :conditions=>{:information_id=>information.id}, :order => "position").each{ |informationligne| %>
-	    			     <%  f.fields_for(:informationlignes, informationligne) do |information_field| %>	     
-					     <% content_tag_for :li, informationligne do %> 
+	    			     <%=  f.fields_for(:informationlignes, informationligne) do |information_field| %>	     
+					     <%= content_tag_for :li, informationligne do %> 
 						     <ul id="id_ul_informationligne_<%= informationligne.id %>">
 						    	<% informationligne.titleinformationlignes.each{ |titleinformationligne| %>	
-								<% information_field.fields_for(:titleinformationlignes, titleinformationligne) do |titleinformationligne_field| %>
-									<% content_tag :li, titleinformationligne, :class=>"class_test" do %>
+								<%= information_field.fields_for(:titleinformationlignes, titleinformationligne) do |titleinformationligne_field| %>
+									<%= content_tag :li, titleinformationligne, :class=>"class_test" do %>
 										<%= titleinformationligne_field.text_field(:title) %><%= titleinformationligne_field.select(:font_size, array_select_form_font_size_num) %><%= titleinformationligne_field.select(:font_weight, [["normal", "normal"],["gras", "bold"]]) %><%= titleinformationligne_field.submit "Supprimer ce titre", :name=>"suptitre_titleinformationligne_id_#{titleinformationligne.id}_deviid_#{@devi.id}" %> 
 									<% end %>
 						        	<% end %>
@@ -83,7 +83,7 @@
 					   
 					    <% @devi.informationlignes.find(:first, :conditions=>{:information_id=>information.id}, :order => "position").information.titleinformationlignes.where(:devi_id=>@devi.id, :informationligne_id=>0).each{ |titleinformationligne| %>
 						     <%= information_field.fields_for(:titleinformationlignes, titleinformationligne)  do |titleinformationligne_fields| %>			
-					     		<% content_tag_for :li, titleinformationligne do %>   
+					     		<%= content_tag_for :li, titleinformationligne do %>   
 
 								<%= titleinformationligne_fields.text_field(:title) %><%= titleinformationligne_fields.select(:font_size, array_select_form_font_size_num) %><%= titleinformationligne_fields.select(:font_weight, [["normal", "normal"],["gras", "bold"]]) %><%= titleinformationligne_fields.submit "Supprimer ce titre", :name=>"suptitre_titleinformationligne_id_#{titleinformationligne.id}_deviid_#{@devi.id}" %>
 							<% end %>
@@ -124,7 +124,7 @@
 					@devi.lignedevis.each{ |lignedevi| %>
 					<%=	f.fields_for(:lignedevis, lignedevi) do |lignedevi_fields|
 					%>
-							<% content_tag_for :tr, lignedevi do %>
+							<%= content_tag_for :tr, lignedevi do %>
 								<td>
 									<%= lignedevi_fields.text_field(:name, :class=>"class_champs_name_lignedevi") %>
 								</td>

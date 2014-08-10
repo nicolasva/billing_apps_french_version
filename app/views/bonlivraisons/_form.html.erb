@@ -19,7 +19,7 @@
 			<%= label_tag("Séléctionner les factures à laquelle vous voulez lier ") %>
 			<ul class='ul_class_list_facture_bonlivraison'>
 				<% bonlivraison.devi.factures.all.collect { |facture| %>
-					<% content_tag_for :li, facture do %>
+					<%= content_tag_for :li, facture do %>
 						<%= facture.numfacture %> : <%= check_box_tag("bonlivraison[facture_ids][]", facture.id, @bonlivraison.factures.include?(facture), :class=>"class_list_facture") %>
 					<% end %>
 				<% } %>

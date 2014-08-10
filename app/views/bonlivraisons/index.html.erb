@@ -19,7 +19,7 @@
     <td width='20%'>
 	    <ul>
 		    <% bonlivraison.factures.each{ |facture| %>
-		    	<% content_tag_for :li, facture do %>
+		    	<%= content_tag_for :li, facture do %>
 				<%= facture.numfacture %>
 			<% end %>
 		    <% } %>

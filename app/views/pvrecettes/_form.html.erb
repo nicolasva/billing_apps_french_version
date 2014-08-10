@@ -14,7 +14,7 @@
 	  <div class='div_class_list_facture'>
 	     <ul id='ul_id_list_facture'>
 	  	<% @pvrecette.devi.factures.all.collect { |facture| %>
-			<% content_tag_for :li, facture do %>
+			<%= content_tag_for :li, facture do %>
 				<%= facture.numfacture %> : <%= check_box_tag("pvrecette[facture_ids][]", facture.id, @pvrecette.factures.include?(facture), :class=>"class_list_facture") %>
 			<% end %>
 		<% } %>

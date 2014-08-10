@@ -1,0 +1,23 @@
+require 'prawn'
+#require 'prawn/layout'
+require 'prawn/core'
+require 'prawn/grid'
+require 'prawn/table'
+require "prawn/utilities"
+require "prawn/text"
+require "prawn/graphics"
+require "prawn/images"
+require "prawn/images/image"
+require "prawn/images/jpg"
+require "prawn/images/png"
+require "prawn/stamp"
+require "prawn/soft_mask"
+require "prawn/security"
+require "prawn/document"
+require "prawn/font"
+require "prawn/encoding"
+require "prawn/measurements"
+require "prawn/repeater"
+require "prawn/outline"
+require "prawn/image_handler"
+
