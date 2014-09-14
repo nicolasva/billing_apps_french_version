@@ -226,7 +226,6 @@ fdsfdsfdsfds
 	#	]]
 
 
-        total_accompte.push("HT (#{@facture.accompte})", format("%.2f",(@totalsumgeneral*@facture.accompte)/100).to_s )
 	#tva = [[Prawn::Table::Cell.new(:text=>"TVA 20%", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*20)/100).to_s, :document => self, :font_style => :bold, :font_size => 10)]]
 
 
@@ -239,7 +238,7 @@ fdsfdsfdsfds
 	  format("%.2f",@totalsumgeneral * 0.2).to_s]
 	  ]
 	#ttc = [[Prawn::Table::Cell.new(:text=>"TTC", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100))).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
-  ttc = [["TTC", format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100)).to_s]]
+  ttc = [["TTC", format("%.2f",(@totalsumgeneral * 0.2) + @totalsumgeneral).to_s]]
   tva += ttc 
    else	 
         #total_accompte = [[Prawn::Table::Cell.new(:text=>"HT (#{@facture.accompte}%)", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(@totalsumgeneral*@facture.accompte)/100)).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
