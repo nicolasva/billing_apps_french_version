@@ -6,7 +6,7 @@
 pdf.bounding_box [0,670], :width => 200  do
 	pdf.text "Emeraude composites", :size => 13, :style => :bold
 	pdf.text "24 bis rue de la truite", :size => 10
-	pdf.text "22400 Coëtemieux", :size => 10
+	pdf.text "22400 Coëtmieux", :size => 10
 	pdf.text "06 76 54 41 94", :size => 10
 	pdf.text "yann@emeraudecomposites.fr", :size => 10
 	#pdf.text "\n"

@@ -8,11 +8,11 @@
 pdf.bounding_box [0,670], :width => 200  do
 	pdf.text "Emeraude composites", :size => 13, :style => :bold
 	pdf.text "24 bis rue de la truite", :size => 10
-	pdf.text "22400 Coëtemieux", :size => 10
+	pdf.text "22400 Coëtmieux", :size => 10
 	pdf.text "06 76 54 41 94", :size=> 10
 	pdf.text "yann@emeraudecomposites.fr", :size => 10
-	pdf.text "\n"
-        pdf.text "S.A.R.L. au capital de 10500€", :size => 10
+	#pdf.text "\n"
+  #      pdf.text "S.A.R.L. au capital de 10500€", :size => 10
 	pdf.text "RM 22 803 795 301", :size => 10
 	pdf.text "Siret 803 795 000 16", :size => 10
 	#pdf.text "TVA FR64493029839", :size => 10	
@@ -303,7 +303,7 @@ fdsfdsfdsfds
 	pdf.text "Conditions de paiement : #{@facture.cond_reglement}", :size => 10 
 	pdf.text "Taux de pénalités de retard 12%", :size => 10
 	pdf.text "Condition d'escompte : sans escomptes", :size => 10
-	pdf.text "Siège social : Tharsis software 183-189 avenue de Choisy 75013 Paris\n\n", :size => 10
+	pdf.text "Siège social : Emeraude Composites 24 bis rue de la truite 2400 Coëtmieux\n\n", :size => 10
 	pdf.text "\n\n\n"
 
 	if compteur_init > 30
