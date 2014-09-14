@@ -21892,3 +21892,23 @@ Processing by DevisController#index as HTML
   [1m[35mClient Load (0.1ms)[0m  SELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1
   Rendered devis/index.html.erb within layouts/application (19.4ms)
 Completed 200 OK in 29ms (Views: 26.1ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/clients/devis/D0001-2014.pdf?id_devi=11" for 127.0.0.1 at 2014-09-14 17:36:55 +0200
+Processing by DevisController#show as PDF
+  Parameters: {"id_devi"=>"11", "id"=>"D0001-2014"}
+  [1m[36mUser Load (2.1ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  [1m[35mDevi Load (0.3ms)[0m  SELECT "devis".* FROM "devis" WHERE "devis"."id" = 11 AND "devis"."numdevis" = 'D0001-2014' LIMIT 1
+  [1m[36mClient Load (0.2ms)[0m  [1mSELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1[0m
+  [1m[35mInformation Load (0.5ms)[0m  SELECT "informations".* FROM "informations" 
+  [1m[36mInformationligne Load (0.1ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 11 AND "informationlignes"."information_id" = 1 LIMIT 1[0m
+  [1m[35mInformationligne Load (0.1ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 11 AND "informationlignes"."information_id" = 1 ORDER BY position
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "titleinformationlignes" WHERE "titleinformationlignes"."informationligne_id" = 9[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "titleinformationlignes" WHERE "titleinformationlignes"."informationligne_id" = 11
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "titleinformationlignes" WHERE "titleinformationlignes"."informationligne_id" = 12[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "titleinformationlignes" WHERE "titleinformationlignes"."informationligne_id" = 13
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "titleinformationlignes" WHERE "titleinformationlignes"."informationligne_id" = 10[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "informations".* FROM "informations" 
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "lignedevis" WHERE "lignedevis"."devi_id" = 11[0m
+  Rendered devis/show.pdf.prawn (276.5ms)
+Completed 200 OK in 305ms (Views: 284.2ms | ActiveRecord: 4.6ms)

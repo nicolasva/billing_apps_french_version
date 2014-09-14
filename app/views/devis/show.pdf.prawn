@@ -4,15 +4,15 @@
 #pigs = "#{RAILS_ROOT}/public/images/img_logo_tharsis/logotharsis.jpg"
 #pdf.image pigs, :scale => 0.2
 pdf.bounding_box [0,670], :width => 200  do
-	pdf.text "VANDENBOGAERDE Nicolas", :size => 13, :style => :bold
-	pdf.text "5 Rue Cave", :size => 10
-	pdf.text "22430 Erquy", :size => 10
-	pdf.text "06 61 66 63 26", :size => 10
-	pdf.text "nicolas.vandenbogaerde@gmail.com", :size => 10
+	pdf.text "Emeraude composites", :size => 13, :style => :bold
+	pdf.text "24 bis rue de la truite", :size => 10
+	pdf.text "22400 Coëtemieux", :size => 10
+	pdf.text "06 76 54 41 94", :size => 10
+	pdf.text "yann@emeraudecomposites.fr", :size => 10
 	#pdf.text "\n"
   #      pdf.text "S.A.R.L. au capital de 10500€", :size => 10
-	#pdf.text "RCS Paris 493 029 839", :size => 10
-	pdf.text "Siret 518 475 785 00011", :size => 10
+	pdf.text "RM 22 803 795 301", :size => 10
+	pdf.text "Siret 803 795 000 16", :size => 10
 	#pdf.text "TVA FR64493029839", :size => 10	
 end
 

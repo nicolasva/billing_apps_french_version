@@ -2,20 +2,20 @@ require 'prawn'
 require 'prawn/layout'
 require 'prawn/core'
 
-pigs = "#{RAILS_ROOT}/public/images/img_logo_tharsis/logotharsis.jpg"
+#pigs = "#{RAILS_ROOT}/public/images/img_logo_tharsis/logotharsis.jpg"
 
-pdf.image pigs, :scale => 0.2
+#pdf.image pigs, :scale => 0.2
 pdf.bounding_box [0,670], :width => 200  do
-	pdf.text "Tharsis Software", :size => 13, :style => :bold
-	pdf.text "15 rue Jean-Baptiste Berlier", :size => 10
-	pdf.text "75013 Paris", :size => 10
-	pdf.text "01 55 43 79 10", :size=> 10
-	pdf.text "billing@tharsis-software.com", :size => 10
+	pdf.text "Emeraude composites", :size => 13, :style => :bold
+	pdf.text "24 bis rue de la truite", :size => 10
+	pdf.text "22400 Coëtemieux", :size => 10
+	pdf.text "06 76 54 41 94", :size=> 10
+	pdf.text "yann@emeraudecomposites.fr", :size => 10
 	pdf.text "\n"
         pdf.text "S.A.R.L. au capital de 10500€", :size => 10
-	pdf.text "RCS Paris 493 029 839", :size => 10
-	pdf.text "Siret 493 029 839 00021", :size => 10
-	pdf.text "TVA FR64493029839", :size => 10	
+	pdf.text "RM 22 803 795 301", :size => 10
+	pdf.text "Siret 803 795 000 16", :size => 10
+	#pdf.text "TVA FR64493029839", :size => 10	
 end
 #compteur_old = 28 
 compteur_init = 28
