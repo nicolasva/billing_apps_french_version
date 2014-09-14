@@ -31,7 +31,7 @@ class FacturesController < ApplicationController
   # GET /factures/1
   # GET /factures/1.xml
   def show
-   if request.request_uri != "/allfactures" && (request.request_uri == "/rapports" || request.request_uri == "/downloadrapports" || request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/rapports" || request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/downloadrapports")
+   if request.url != "/allfactures" && (request.url == "/rapports" || request.url == "/downloadrapports" || request.url.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/rapports" || request.url.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/downloadrapports")
    	#Time.local(2011,1,1,0,0,0)
 	@hash_name_client = Hash.new
 	@hash_name_client_facture_encaisse = Hash.new
@@ -51,14 +51,14 @@ class FacturesController < ApplicationController
 	@factures = Facture.where("created_at between :last_year and :first_year and proforma='f' and annulation='f'",{:first_year=>Time.local(@year_params+1,1,1,0,0,0).strftime("%Y-%m-%d %H:%M:%S"), :last_year=>Time.local(@year_params,1,1,0,0,0).strftime("%Y-%m-%d %H:%M:%S")}).all
   	@factures_encaisses = Facture.where("datepaiement between :last_year and :first_year and created_at <= :time_now and proforma='f' and annulation='f' and datepaiementcheck='t'",{:first_year=>Time.local(@year_params+1,1,1,0,0,0).strftime("%Y-%m-%d %H:%M:%S"), :last_year=>Time.local(@year_params,1,1,0,0,0).strftime("%Y-%m-%d %H:%M:%S"),:time_now=>@time_now.strftime("%Y-%m-%d %H:%M:%S")}) 
    else
-      unless request.request_uri == "/allfactures"
+      unless request.url == "/allfactures"
     	@totalsumgeneral = 0
     	@hash_totalsnumgeneral = Hash.new
     	@facture = Facture.where(:numfacture=>params[:id], :id=>params[:facture_id]).first
         	if @facture.choixrib == "rib"	
-			@pigsfacture = "#{RAILS_ROOT}/public/images/img_logo_tharsis/rib/tharsis.png"
+			@pigsfacture = "#{Rails.root}/public/images/img_logo_tharsis/rib/tharsis.png"
 		else
-			@pigsfacture = "#{RAILS_ROOT}/public/images/img_logo_tharsis/factobail/facto.png"
+			@pigsfacture = "#{Rails.root}/public/images/img_logo_tharsis/factobail/facto.png"
 		end
       else
       	@time_now = Time.now
@@ -67,7 +67,7 @@ class FacturesController < ApplicationController
       end
    end	
 	 #render :text=>request.request_uri
-	if !request.request_uri == "/downloadrapports" || (request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0].nil? || !request.request_uri.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/downloadrapports")
+	if !request.url == "/downloadrapports" || (request.url.scan(/^(.{1,})?\?.{1,}?$/)[0].nil? || !request.url.scan(/^(.{1,})?\?.{1,}?$/)[0][0] == "/downloadrapports")
 		respond_with(@facture) 
 	end
   end
@@ -99,7 +99,7 @@ class FacturesController < ApplicationController
   # POST /factures
   # POST /factures.xml
   def create
-   unless request.request_uri == "/generateallfactures"
+   unless request.url == "/generateallfactures"
     	params[:facture][:numfacture] = get_numfacture 
     	@facture = Facture.new(params[:facture])
     	#respond_to do |format|

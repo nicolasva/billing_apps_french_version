@@ -1,6 +1,6 @@
-require 'prawn'
-require 'prawn/layout'
-require 'prawn/core'
+#require 'prawn'
+#require 'prawn/layout'
+#require 'prawn/core'
 
 #pigs = "#{RAILS_ROOT}/public/images/img_logo_tharsis/logotharsis.jpg"
 
@@ -63,26 +63,41 @@ pdf.text "\n\n"
 		}
 	end
 
-	Information.all.each{ |information|
+  headers = Array.new
+  headers.push("Produit")
+  headers.push("Nb")
+  headers.push("Unité")
+  headers.push("Prix €")
+  headers.push("Total €")
+	Information.all.each do |information|
 		compteur_init += 1
         	unless @facture.devi.informationlignes.find(:first, :conditions=>{:information_id=>information.id}).nil?
 			items = Array.new
+      items.push(headers)
 			items_temp = Array.new
-			unless information.name.nil?
-				information.name.each_line{ |line|
-					compteur_init += 1
-				}
-			end
+			#unless information.name.nil?
+			#	information.name.each_line{ |line|
+			#		compteur_init += 1
+			#	}
+			#end
 
  			@facture.devi.informationlignes.find(:all, :conditions=>{:information_id=>information.id}, :order => "position").each{ |informationligne|
 				informationligne.number.nil? && informationligne.price.nil? ? "" : @totalsumgeneral += informationligne.number * informationligne.price
-				items_temp.push((information.name.nil? ? "" : Prawn::Table::Cell.new(:width=>0, :text=>informationligne.name, :font_size=>10)), Prawn::Table::Cell.new(:text=>informationligne.number, :font_size=>10, :width=>0), Prawn::Table::Cell.new(:text=>informationligne.unite, :font_size=>10, :width=>0), Prawn::Table::Cell.new(:text=>format("%.2f",informationligne.price).to_s, :font_size=>10, :width=>0), (informationligne.number.nil? && informationligne.price.nil? ? "" : Prawn::Table::Cell.new(:text=>(format("%.2f",informationligne.number * informationligne.price)).to_s, :width=>0, :font_size=>10)))
-				
-		     unless informationligne.titleinformationlignes.empty?	
-			informationligne.titleinformationlignes.each{ |titleinformationligne|
-				items.push([Prawn::Table::Cell.new(:width=>20, :document => self, :border_width => 0, :borders => [:left], :text=>titleinformationligne.title, :font_style => titleinformationligne.font_weight == "bold" ? :bold : :normal, :font_size=>titleinformationligne.font_size), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:none], :text=>""), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:none], :text=>""), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:none], :text=>""), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:right], :text=>"")])
-			}
-                     end
+				#items_temp.push((information.name.nil? ? "" : Prawn::Table::Cell.new(:width=>0, :text=>informationligne.name, :font_size=>10)), Prawn::Table::Cell.new(:text=>informationligne.number, :font_size=>10, :width=>0), Prawn::Table::Cell.new(:text=>informationligne.unite, :font_size=>10, :width=>0), Prawn::Table::Cell.new(:text=>format("%.2f",informationligne.price).to_s, :font_size=>10, :width=>0), (informationligne.number.nil? && informationligne.price.nil? ? "" : Prawn::Table::Cell.new(:text=>(format("%.2f",informationligne.number * informationligne.price)).to_s, :width=>0, :font_size=>10)))
+		     
+        items_temp.push((information.name.nil? ? "" : informationligne.name), 
+        informationligne.number.to_s, 
+        informationligne.unite.to_s, 
+        format("%.2f",informationligne.price).to_s, 
+        (informationligne.number.nil? && informationligne.price.nil? ? "" : (format("%.2f",informationligne.number * informationligne.price)).to_s
+        ))	
+        unless informationligne.titleinformationlignes.empty?	
+			    informationligne.titleinformationlignes.each{ |titleinformationligne|
+fdsfdsfdsfds
+				#items.push([Prawn::Table::Cell.new(:width=>20, :document => self, :border_width => 0, :borders => [:left], :text=>titleinformationligne.title, :font_style => titleinformationligne.font_weight == "bold" ? :bold : :normal, :font_size=>titleinformationligne.font_size), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:none], :text=>""), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:none], :text=>""), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:none], :text=>""), Prawn::Table::Cell.new(:width=>20, :document => self, :borders => [:right], :text=>"")])
+			      items.push([titleinformationligne.title, "", "", "", ""])
+          }
+        end
 
 				items.push(items_temp)
 				items_temp = Array.new
@@ -111,42 +126,43 @@ pdf.text "\n\n"
 			compteur_init = 0
 		end
 
-    		headers = [Prawn::Table::Cell.new(
-    		:width => 0,
-    		:text => "Produit",
-    		:font_style => :bold,
-    		:font_size => 10), Prawn::Table::Cell.new(
-    		:width => 0,
-    		:text => "Nb",
-    		:font_style => :bold,
-    		:font_size => 10), Prawn::Table::Cell.new(
-    		:width => 0,
-    		:text => "Unité",
-    		:font_style => :bold,
-    		:font_size => 10), Prawn::Table::Cell.new(
-    		:width => 0,
-    		:text => "Prix €",
-    		:font_style => :bold,
-    		:font_size => 10), Prawn::Table::Cell.new(
-    		:width => 0,
-    		:text => "Total €",
-    		:font_style => :bold,
-    		:font_size => 10)] 
+    		#headers = [Prawn::Table::Cell.new(
+    		#:width => 0,
+    		#:text => "Produit",
+    		#:font_style => :bold,
+    		#:font_size => 10), Prawn::Table::Cell.new(
+    		#:width => 0,
+    		#:text => "Nb",
+    		#:font_style => :bold,
+    		#:font_size => 10), Prawn::Table::Cell.new(
+    		#:width => 0,
+    		#:text => "Unité",
+    		#:font_style => :bold,
+    		#:font_size => 10), Prawn::Table::Cell.new(
+    		#:width => 0,
+    		#:text => "Prix €",
+    		#:font_style => :bold,
+    		#:font_size => 10), Prawn::Table::Cell.new(
+    		#:width => 0,
+    		#:text => "Total €",
+    		#:font_style => :bold,
+    		#:font_size => 10)] 
 
 		@hash_totalsnumgeneral[information.name] = @totalsumgeneral
-		phrase_somme = Prawn::Table::Cell.new(:text => "Somme #{information.name}", :document => self, :font_style => :bold, :font_size=>10)
-		totalsumgeneral = Prawn::Table::Cell.new(:text => format("%.2f", @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size=>10)
-		items.push([phrase_somme, "", "", "", totalsumgeneral])
-		pdf.text information.name, :style => :bold
-		pdf.table items, :border_style => :grid,
-			:headers => headers,
-			:column_widths => {0 => 270},
-			:align => {0 => :left, 1 => :right, 2 => :right, 3 => :right, 4 => :right },
-			:width=> 535
-		end
+		#phrase_somme = Prawn::Table::Cell.new(:text => "Somme #{information.name}", :document => self, :font_style => :bold, :font_size=>10)
+		#totalsumgeneral = Prawn::Table::Cell.new(:text => format("%.2f", @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size=>10)
+		#items.push([phrase_somme, "", "", "", totalsumgeneral])
+		pdf.text information.name, :style => :bold, :font_size => 10
+		pdf.table(items, :cell_style => { :borders => [:left, :right] })
+    #pdf.table items, :border_style => :grid,
+		#	:headers => headers,
+		#	:column_widths => {0 => 270},
+		#	:align => {0 => :left, 1 => :right, 2 => :right, 3 => :right, 4 => :right },
+		#	:width=> 535
+		#end
 		@totalsumgeneral = 0
 		#compteur_old = compteur_init
-	}
+	end
 
 	#pdf.text compteur_init.to_s
 	#pdf.text compteur_old.to_s
@@ -164,66 +180,106 @@ pdf.text "\n\n"
 		compteur_init = 0
 	end
 
+  header_bis = Array.new
+  header_bis.push("Produit")
+  header_bis.push("Total net €")
+
 	pdf.text "Total", :style => :bold, :font_size=>10
 	items = Array.new
+  items.push(header_bis)
 	items_temp = Array.new
 	Information.all.each{ |information|
 		unless @hash_totalsnumgeneral[information.name].nil?
-			items.push(items_temp.push(Prawn::Table::Cell.new(:text=>information.name.nil? ? "" : information.name, :width => 0, :font_size=>10), Prawn::Table::Cell.new(:text=>@hash_totalsnumgeneral[information.name], :width => 0, :font_size=>10)))
-			@totalsumgeneral += @hash_totalsnumgeneral[information.name]
+			#items.push(items_temp.push(Prawn::Table::Cell.new(:text=>information.name.nil? ? "" : information.name, :width => 0, :font_size=>10), Prawn::Table::Cell.new(:text=>@hash_totalsnumgeneral[information.name], :width => 0, :font_size=>10)))
+			items.push(items_temp.push(information.name, @hash_totalsnumgeneral[information.name]))
+      @totalsumgeneral += @hash_totalsnumgeneral[information.name]
 		end
 		items_temp = Array.new
 	}
  
-   total = [[Prawn::Table::Cell.new(
-    :text => "Total #{@facture.devi.tva ? "" : "*"}", :document => self, :font_style => (@facture.accompte == 100 ? :bold : :normal), :font_size=>10),
-	   Prawn::Table::Cell.new(
-    :text => format("%.2f",@totalsumgeneral).to_s, :document => self, :font_style => (@facture.accompte == 100 ? :bold : :normal), :font_size=>10)]]
+   #total = [[Prawn::Table::Cell.new(
+   # :text => "Total #{@facture.devi.tva ? "" : "*"}", :document => self, :font_style => (@facture.accompte == 100 ? :bold : :normal), :font_size=>10),
+	 #  Prawn::Table::Cell.new(
+   # :text => format("%.2f",@totalsumgeneral).to_s, :document => self, :font_style => (@facture.accompte == 100 ? :bold : :normal), :font_size=>10)]]
+
+   total = [["Total", format("%.2f",@totalsumgeneral).to_s]]
  
      unless @facture.devi.lignedevis.empty?
     	totallignedevis = Array.new
 	@facture.devi.lignedevis.each{ |lignedevi| 
 		@totalsumgeneral += lignedevi.prix
-		totallignedevis.push([Prawn::Table::Cell.new(:text=>lignedevi.name, :font_style => :normal, :font_size => 10),Prawn::Table::Cell.new(:text=>format("%.2f", lignedevi.prix).to_s, :font_style => :normal, :font_size => 10)])  
+		totallignedevis.push([lignedevi.name,format("%.2f", lignedevi.prix).to_s])  
 	}
-	totallignedevis.push([Prawn::Table::Cell.new(:text=>"HT", :font_style => @facture.accompte == 100 ? :bold : :normal, :font_size => 10),Prawn::Table::Cell.new(:text=>@totalsumgeneral.to_s, :font_style => @facture.accompte == 100 ? :bold : :normal, :font_size => 10)])
+
+  totallignedevis.push(["HT",@totalsumgeneral.to_s])
+	#totallignedevis.push([Prawn::Table::Cell.new(:text=>"HT", :font_style => @facture.accompte == 100 ? :bold : :normal, :font_size => 10),Prawn::Table::Cell.new(:text=>@totalsumgeneral.to_s, :font_style => @facture.accompte == 100 ? :bold : :normal, :font_size => 10)])
      end 
+   total_accompte = Array.new
   if @facture.accompte == 100 
-   tva = [[Prawn::Table::Cell.new(
-    :text => "TVA 20%", :document => self, :font_style => :bold, :font_size=>10), 
-	  Prawn::Table::Cell.new(
-    :text => format("%.2f",@totalsumgeneral * 0.2).to_s, :document => self, :font_style => :bold, :font_size=>10)],
-	  [Prawn::Table::Cell.new(
-    :text => "TTC", :document => self, :font_size=>10, :font_style => :bold), Prawn::Table::Cell.new(
-    :text => format("%.2f",(@totalsumgeneral * 0.2) + @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size=>10)
-		]]
+   #tva = [[Prawn::Table::Cell.new(
+   # :text => "TVA 20%", :document => self, :font_style => :bold, :font_size=>10), 
+	 # Prawn::Table::Cell.new(
+   # :text => format("%.2f",@totalsumgeneral * 0.2).to_s, :document => self, :font_style => :bold, :font_size=>10)],
+	 # [Prawn::Table::Cell.new(
+   # :text => "TTC", :document => self, :font_size=>10, :font_style => :bold), Prawn::Table::Cell.new(
+   # :text => format("%.2f",(@totalsumgeneral * 0.2) + @totalsumgeneral).to_s, :document => self, :font_style => :bold, :font_size=>10)
+	#	]]
+
+
+        total_accompte.push("HT (#{@facture.accompte})", format("%.2f",(@totalsumgeneral*@facture.accompte)/100).to_s )
+	#tva = [[Prawn::Table::Cell.new(:text=>"TVA 20%", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*20)/100).to_s, :document => self, :font_style => :bold, :font_size => 10)]]
+
+
+   #tva = [["TVA 20%", 
+	 # format("%.2f",@totalsumgeneral * 0.2).to_s],
+	 # ["TTC", format("%.2f" , (@totalsumgeneral * 0.2) + @totalsumgeneral).to_s
+	 #	]]
+	 #
+   tva = [["TVA 20%", 
+	  format("%.2f",@totalsumgeneral * 0.2).to_s]
+	  ]
+	#ttc = [[Prawn::Table::Cell.new(:text=>"TTC", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100))).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
+  ttc = [["TTC", format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100)).to_s]]
+  tva += ttc 
    else	 
-        total_accompte = [[Prawn::Table::Cell.new(:text=>"HT (#{@facture.accompte}%)", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(@totalsumgeneral*@facture.accompte)/100)).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
+        #total_accompte = [[Prawn::Table::Cell.new(:text=>"HT (#{@facture.accompte}%)", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(@totalsumgeneral*@facture.accompte)/100)).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
+        total_accompte.push("HT (#{@facture.accompte})", format("%.2f",(@totalsumgeneral*@facture.accompte)/100).to_s )
+	#tva = [[Prawn::Table::Cell.new(:text=>"TVA 20%", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*20)/100).to_s, :document => self, :font_style => :bold, :font_size => 10)]]
 
-	tva = [[Prawn::Table::Cell.new(:text=>"TVA 20%", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*20)/100).to_s, :document => self, :font_style => :bold, :font_size => 10)]]
 
-	ttc = [[Prawn::Table::Cell.new(:text=>"TTC", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100))).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
-        tva += ttc 
-   end
+   tva = [["TVA 20%", 
+	  format("%.2f",@totalsumgeneral * 0.2).to_s],
+	  ["TTC", format("%.2f" , (@totalsumgeneral * 0.2) + @totalsumgeneral).to_s
+		]]
+	#ttc = [[Prawn::Table::Cell.new(:text=>"TTC", :document => self, :font_style => :bold, :font_size=>10), Prawn::Table::Cell.new(:text=>(format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100))).to_s, :document => self, :font_style => :bold, :font_size=>10)]]
+  ttc = [["TTC", format("%.2f",(((@totalsumgeneral*@facture.accompte)/100)*0.2)+((@totalsumgeneral*@facture.accompte)/100)).to_s]]
+  tva += ttc 
+ end
+
 	items += total
 	items += totallignedevis unless @facture.devi.lignedevis.empty?
         items += total_accompte unless @facture.accompte == 100
 	items += tva if @facture.devi.tva?
-    header_bis = [Prawn::Table::Cell.new(:position => [0,0],
-    :width => 0,
-    :text => "Produit",
-    :font_style => :bold,
-    :font_size => 10),Prawn::Table::Cell.new(:position => [0,0],
-    :width => 0,
-    :text => "Total net €",
-    :font_style => :bold,
-    :font_size => 10)]
+    header_bis = Array.new
+    header_bis.push("Produit")
+    header_bis.push("Total net €")
+    #header_bis = [Prawn::Table::Cell.new(:position => [0,0],
+    #:width => 0,
+    #:text => "Produit",
+    #:font_style => :bold,
+    #:font_size => 10),Prawn::Table::Cell.new(:position => [0,0],
+    #:width => 0,
+    #:text => "Total net €",
+    #:font_style => :bold,
+    #:font_size => 10)]
 
-    	pdf.table(items, :border_style => :grid,
-		:headers => header_bis,
-		:column_widths => {0 => 430},
-		:align => {0 => :left, 1 => :right},
-		:width => 535)
+
+    pdf.table(items, :cell_style => { :borders => [:left, :right] })
+    #	pdf.table(items, :border_style => :grid,
+		#:headers => header_bis,
+		#:column_widths => {0 => 430},
+		#:align => {0 => :left, 1 => :right},
+		#:width => 535)
 
 
 	#compteur_init += 26
@@ -265,4 +321,5 @@ pdf.text "\n\n"
 #    end
 #end
 
-pdf.number_pages "<page>/<total>", [pdf.bounds.right, 0]
+#pdf.number_pages "<page>/<total>", [pdf.bounds.right, 0]
+end
