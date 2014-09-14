@@ -21646,3 +21646,249 @@ Processing by DevisController#show as PDF
   [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "lignedevis" WHERE "lignedevis"."devi_id" = 11[0m
   Rendered devis/show.pdf.prawn (61.9ms)
 Completed 200 OK in 66ms (Views: 63.4ms | ActiveRecord: 1.1ms)
+DEPRECATION WARNING: Passing a block to devise_for is deprecated. Please remove the block from devise_for (only the block, the call to devise_for must still exist) and call devise_scope :user do ... end with the block instead. (called from block in <top (required)> at /Users/nicolasvandenbogaerde/ruby/billing_apps_french_version/config/routes.rb:2)
+
+
+Started GET "/" for 127.0.0.1 at 2014-09-14 16:15:15 +0200
+Processing by ClientsController#index as HTML
+Completed 401 Unauthorized in 6ms
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2014-09-14 16:15:16 +0200
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/sessions/new.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 52ms (Views: 20.8ms | ActiveRecord: 2.2ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2014-09-14 16:15:21 +0200
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/q3t5FZ0GVFpYCSe/08clpr26aQck2kzFCy/XwKx6Vc=", "user"=>{"username"=>"nicolas", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'nicolas' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mUPDATE "users" SET "last_sign_in_at" = '2014-08-09 08:06:32.471739', "current_sign_in_at" = '2014-09-14 14:15:21.552244', "sign_in_count" = 5, "updated_at" = '2014-09-14 14:15:21.553101' WHERE "users"."id" = 1[0m
+  [1m[35m (1.0ms)[0m  commit transaction
+Redirected to http://localhost:3002/
+Completed 302 Found in 94ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-09-14 16:15:21 +0200
+Processing by ClientsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  [1m[35mClient Load (0.6ms)[0m  SELECT "clients".* FROM "clients" ORDER BY nameentreprise
+  Rendered clients/index.html.erb within layouts/application (12.6ms)
+Completed 200 OK in 33ms (Views: 25.9ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/clients/devis" for 127.0.0.1 at 2014-09-14 16:15:23 +0200
+Processing by DevisController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  [1m[35mDevi Load (0.7ms)[0m  SELECT "devis".* FROM "devis" WHERE ("devis"."created_at" BETWEEN '2014-01-01 00:00:00' AND '2015-01-01 00:00:00') ORDER BY numdevis
+  [1m[36mInformationligne Load (1.1ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 11[0m
+  [1m[35mLignedevi Load (0.5ms)[0m  SELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 11
+  [1m[36mClient Load (0.3ms)[0m  [1mSELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1[0m
+  Rendered devis/index.html.erb within layouts/application (42.5ms)
+Completed 200 OK in 79ms (Views: 50.4ms | ActiveRecord: 3.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-09-14 16:15:27 +0200
+Processing by ClientsController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mClient Load (0.3ms)[0m  [1mSELECT "clients".* FROM "clients" ORDER BY nameentreprise[0m
+  Rendered clients/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 16ms (Views: 12.5ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/clients/devis?client_id=1" for 127.0.0.1 at 2014-09-14 16:15:28 +0200
+Processing by DevisController#index as HTML
+  Parameters: {"client_id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."client_id" = 1 AND ("devis"."created_at" BETWEEN '2014-01-01 00:00:00' AND '2015-01-01 00:00:00') ORDER BY numdevis[0m
+  [1m[35mInformationligne Load (0.3ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 11
+  [1m[36mLignedevi Load (0.2ms)[0m  [1mSELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 11[0m
+  [1m[35mClient Load (0.2ms)[0m  SELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1
+  Rendered devis/index.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 21ms (Views: 17.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/clients/devis/new?client_id=1" for 127.0.0.1 at 2014-09-14 16:15:30 +0200
+Processing by DevisController#new as HTML
+  Parameters: {"client_id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  [1m[35mDevi Load (0.1ms)[0m  SELECT "devis".* FROM "devis" WHERE (created_at >= '2014-01-01 00:00:00')
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  INSERT INTO "devis" ("client_id", "cond_payment", "created_at", "description", "etat", "numdevis", "tva", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["client_id", 1], ["cond_payment", "40% à la commande, 60% à la livraison."], ["created_at", Sun, 14 Sep 2014 14:15:30 UTC +00:00], ["description", nil], ["etat", 1], ["numdevis", "D0002-2014"], ["tva", true], ["updated_at", Sun, 14 Sep 2014 14:15:30 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3002/clients/devis/12/edit
+Completed 302 Found in 10ms (ActiveRecord: 3.1ms)
+
+
+Started GET "/clients/devis/12/edit" for 127.0.0.1 at 2014-09-14 16:15:30 +0200
+Processing by DevisController#edit as HTML
+  Parameters: {"id"=>"12"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.2ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."id" = ? LIMIT 1[0m  [["id", "12"]]
+  [1m[35mClient Load (0.4ms)[0m  SELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1
+  Rendered devis/templates/_error_form_devi.html.erb (0.7ms)
+  [1m[36mInformation Load (0.5ms)[0m  [1mSELECT "informations".* FROM "informations" [0m
+  [1m[35mInformationligne Load (0.8ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12 AND "informationlignes"."information_id" = 1 ORDER BY position
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "titleinformationlignes" WHERE "titleinformationlignes"."information_id" = 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "informations".* FROM "informations" 
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "lignedevis" WHERE "lignedevis"."devi_id" = 12[0m
+  Rendered devis/templates/_form.html.erb (42.4ms)
+  Rendered devis/edit.html.erb within layouts/application (53.1ms)
+Completed 200 OK in 67ms (Views: 60.5ms | ActiveRecord: 3.6ms)
+
+
+Started PUT "/clients/devis/12" for 127.0.0.1 at 2014-09-14 16:15:33 +0200
+Processing by DevisController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/TpxMX3/vUajPGbyytvjZ69jOBhPoCmW7QuT//JpFGw=", "devi"=>{"created_at(3i)"=>"14", "created_at(2i)"=>"9", "created_at(1i)"=>"2014", "numdevis"=>"D0002-2014", "etat"=>"1", "description"=>"vdvcvds", "tva"=>"1", "cond_payment"=>"40% à la commande, 60% à la livraison."}, "add_ligne_informationid_1_deviid_12"=>"Ajouter une ligne", "id"=>"12"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."id" = ? LIMIT 1[0m  [["id", "12"]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mUPDATE "devis" SET "description" = 'vdvcvds', "created_at" = '2014-09-14 00:00:00.000000', "updated_at" = '2014-09-14 14:15:33.550309' WHERE "devis"."id" = 12[0m
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "informationlignes" ("devi_id", "information_id", "name", "number", "position", "price", "unite") VALUES (?, ?, ?, ?, ?, ?, ?)  [["devi_id", 12], ["information_id", 1], ["name", nil], ["number", 0.0], ["position", nil], ["price", 0.0], ["unite", "pce"]]
+  [1m[36m (0.6ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3002/clients/devis/12/edit
+Completed 302 Found in 8ms (ActiveRecord: 2.2ms)
+
+
+Started GET "/clients/devis/12/edit" for 127.0.0.1 at 2014-09-14 16:15:33 +0200
+Processing by DevisController#edit as HTML
+  Parameters: {"id"=>"12"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."id" = ? LIMIT 1[0m  [["id", "12"]]
+  [1m[35mClient Load (0.3ms)[0m  SELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1
+  Rendered devis/templates/_error_form_devi.html.erb (0.1ms)
+  [1m[36mInformation Load (0.2ms)[0m  [1mSELECT "informations".* FROM "informations" [0m
+  [1m[35mInformationligne Load (0.2ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12 AND "informationlignes"."information_id" = 1 ORDER BY position
+  [1m[36mInformationligne Load (0.1ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12[0m
+  [1m[35mTitleinformationligne Load (0.5ms)[0m  SELECT "titleinformationlignes".* FROM "titleinformationlignes" WHERE "titleinformationlignes"."informationligne_id" = 14
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "titleinformationlignes" WHERE "titleinformationlignes"."information_id" = 1[0m
+  [1m[35mCACHE (0.0ms)[0m  SELECT "informations".* FROM "informations" 
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "lignedevis" WHERE "lignedevis"."devi_id" = 12[0m
+  Rendered devis/templates/_form.html.erb (19.9ms)
+  Rendered devis/edit.html.erb within layouts/application (25.5ms)
+Completed 200 OK in 38ms (Views: 34.2ms | ActiveRecord: 2.5ms)
+
+
+Started PUT "/clients/devis/12" for 127.0.0.1 at 2014-09-14 16:15:50 +0200
+Processing by DevisController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/TpxMX3/vUajPGbyytvjZ69jOBhPoCmW7QuT//JpFGw=", "devi"=>{"created_at(3i)"=>"14", "created_at(2i)"=>"9", "created_at(1i)"=>"2014", "numdevis"=>"D0002-2014", "etat"=>"1", "description"=>"vdvcvds", "informationlignes_attributes"=>{"0"=>{"name"=>"fdsfdsfsd", "number"=>"1", "unite"=>"pce", "price"=>"200", "id"=>"14"}}, "tva"=>"1", "cond_payment"=>"40% à la commande, 60% à la livraison."}, "commit"=>"Mettre à jour", "id"=>"12"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.2ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."id" = ? LIMIT 1[0m  [["id", "12"]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mInformationligne Load (0.3ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12 AND "informationlignes"."id" IN (14)[0m
+  [1m[35m (0.6ms)[0m  UPDATE "informationlignes" SET "name" = 'fdsfdsfsd', "number" = 1.0, "price" = 200.0 WHERE "informationlignes"."id" = 14
+  [1m[36m (2.2ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3002/clients/devis?client_id=1
+Completed 302 Found in 14ms (ActiveRecord: 3.6ms)
+
+
+Started GET "/clients/devis?client_id=1" for 127.0.0.1 at 2014-09-14 16:15:50 +0200
+Processing by DevisController#index as HTML
+  Parameters: {"client_id"=>"1"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."client_id" = 1 AND ("devis"."created_at" BETWEEN '2014-01-01 00:00:00' AND '2015-01-01 00:00:00') ORDER BY numdevis[0m
+  [1m[35mInformationligne Load (0.3ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 11
+  [1m[36mLignedevi Load (0.1ms)[0m  [1mSELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 11[0m
+  [1m[35mClient Load (0.2ms)[0m  SELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1
+  [1m[36mInformationligne Load (0.3ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12[0m
+  [1m[35mLignedevi Load (0.2ms)[0m  SELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 12
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1[0m
+  Rendered devis/index.html.erb within layouts/application (15.0ms)
+Completed 200 OK in 27ms (Views: 22.9ms | ActiveRecord: 1.4ms)
+
+
+Started DELETE "/clients/devis/12" for 127.0.0.1 at 2014-09-14 16:15:55 +0200
+Processing by DevisController#destroy as HTML
+  Parameters: {"authenticity_token"=>"/TpxMX3/vUajPGbyytvjZ69jOBhPoCmW7QuT//JpFGw=", "id"=>"12"}
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.2ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."id" = ? LIMIT 1[0m  [["id", "12"]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mLignedevi Load (0.2ms)[0m  [1mSELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 12[0m
+  [1m[35mFacture Load (0.6ms)[0m  SELECT "factures".* FROM "factures" WHERE "factures"."devi_id" = 12
+  [1m[36mInformationligne Load (0.2ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12[0m
+  [1m[35mSQL (0.5ms)[0m  DELETE FROM "informationlignes" WHERE "informationlignes"."id" = ?  [["id", 14]]
+  [1m[36m (0.5ms)[0m  [1mrollback transaction[0m
+Completed 500 Internal Server Error in 60ms
+
+NoMethodError (undefined method `id' for #<Class:0x00000101ab1740>):
+  app/models/pvrecette.rb:6:in `<class:Pvrecette>'
+  app/models/pvrecette.rb:1:in `<top (required)>'
+  app/controllers/devis_controller.rb:143:in `destroy'
+
+
+  Rendered /Users/nicolasvandenbogaerde/.rvm/gems/ruby-2.1.0@billing/gems/actionpack-3.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.erb (3.2ms)
+  Rendered /Users/nicolasvandenbogaerde/.rvm/gems/ruby-2.1.0@billing/gems/actionpack-3.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.1ms)
+  Rendered /Users/nicolasvandenbogaerde/.rvm/gems/ruby-2.1.0@billing/gems/actionpack-3.2.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.1ms)
+
+
+Started GET "/clients/devis?client_id=1" for 127.0.0.1 at 2014-09-14 16:17:23 +0200
+Processing by DevisController#index as HTML
+  Parameters: {"client_id"=>"1"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."client_id" = 1 AND ("devis"."created_at" BETWEEN '2014-01-01 00:00:00' AND '2015-01-01 00:00:00') ORDER BY numdevis[0m
+  [1m[35mInformationligne Load (0.2ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 11
+  [1m[36mLignedevi Load (0.1ms)[0m  [1mSELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 11[0m
+  [1m[35mClient Load (0.3ms)[0m  SELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1
+  [1m[36mInformationligne Load (0.2ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12[0m
+  [1m[35mLignedevi Load (0.2ms)[0m  SELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 12
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1[0m
+  Rendered devis/index.html.erb within layouts/application (47.4ms)
+Completed 200 OK in 102ms (Views: 53.9ms | ActiveRecord: 3.4ms)
+
+
+Started DELETE "/clients/devis/12" for 127.0.0.1 at 2014-09-14 16:17:28 +0200
+Processing by DevisController#destroy as HTML
+  Parameters: {"authenticity_token"=>"/TpxMX3/vUajPGbyytvjZ69jOBhPoCmW7QuT//JpFGw=", "id"=>"12"}
+  [1m[35mUser Load (0.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE "devis"."id" = ? LIMIT 1[0m  [["id", "12"]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mLignedevi Load (0.1ms)[0m  [1mSELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 12[0m
+  [1m[35mFacture Load (0.2ms)[0m  SELECT "factures".* FROM "factures" WHERE "factures"."devi_id" = 12
+  [1m[36mInformationligne Load (0.1ms)[0m  [1mSELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12[0m
+  [1m[35mSQL (0.7ms)[0m  DELETE FROM "informationlignes" WHERE "informationlignes"."id" = ?  [["id", 14]]
+  [1m[36mPvrecette Load (0.1ms)[0m  [1mSELECT "pvrecettes".* FROM "pvrecettes" WHERE "pvrecettes"."devi_id" = 12[0m
+  [1m[35m (0.5ms)[0m  rollback transaction
+Completed 500 Internal Server Error in 29ms
+
+NoMethodError (undefined method `id' for #<Class:0x00000101ac3c10>):
+  app/models/bonlivraison.rb:4:in `<class:Bonlivraison>'
+  app/models/bonlivraison.rb:1:in `<top (required)>'
+  app/controllers/devis_controller.rb:143:in `destroy'
+
+
+  Rendered /Users/nicolasvandenbogaerde/.rvm/gems/ruby-2.1.0@billing/gems/actionpack-3.2.0/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.7ms)
+  Rendered /Users/nicolasvandenbogaerde/.rvm/gems/ruby-2.1.0@billing/gems/actionpack-3.2.0/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.2ms)
+  Rendered /Users/nicolasvandenbogaerde/.rvm/gems/ruby-2.1.0@billing/gems/actionpack-3.2.0/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (6.7ms)
+
+
+Started DELETE "/clients/devis/12" for 127.0.0.1 at 2014-09-14 16:17:59 +0200
+Processing by DevisController#destroy as HTML
+  Parameters: {"authenticity_token"=>"/TpxMX3/vUajPGbyytvjZ69jOBhPoCmW7QuT//JpFGw=", "id"=>"12"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1[0m
+  [1m[35mDevi Load (0.2ms)[0m  SELECT "devis".* FROM "devis" WHERE "devis"."id" = ? LIMIT 1  [["id", "12"]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mLignedevi Load (0.1ms)[0m  SELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 12
+  [1m[36mFacture Load (0.1ms)[0m  [1mSELECT "factures".* FROM "factures" WHERE "factures"."devi_id" = 12[0m
+  [1m[35mInformationligne Load (0.1ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 12
+  [1m[36mSQL (0.3ms)[0m  [1mDELETE FROM "informationlignes" WHERE "informationlignes"."id" = ?[0m  [["id", 14]]
+  [1m[35mPvrecette Load (0.1ms)[0m  SELECT "pvrecettes".* FROM "pvrecettes" WHERE "pvrecettes"."devi_id" = 12
+  [1m[36mBonlivraison Load (0.1ms)[0m  [1mSELECT "bonlivraisons".* FROM "bonlivraisons" WHERE "bonlivraisons"."devi_id" = 12[0m
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM "devis" WHERE "devis"."id" = ?  [["id", 12]]
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3002/clients/devis
+Completed 302 Found in 86ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/clients/devis" for 127.0.0.1 at 2014-09-14 16:17:59 +0200
+Processing by DevisController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1
+  [1m[36mDevi Load (0.1ms)[0m  [1mSELECT "devis".* FROM "devis" WHERE ("devis"."created_at" BETWEEN '2014-01-01 00:00:00' AND '2015-01-01 00:00:00') ORDER BY numdevis[0m
+  [1m[35mInformationligne Load (0.2ms)[0m  SELECT "informationlignes".* FROM "informationlignes" WHERE "informationlignes"."devi_id" = 11
+  [1m[36mLignedevi Load (0.2ms)[0m  [1mSELECT "lignedevis".* FROM "lignedevis" WHERE "lignedevis"."devi_id" = 11[0m
+  [1m[35mClient Load (0.1ms)[0m  SELECT "clients".* FROM "clients" WHERE "clients"."id" = 1 LIMIT 1
+  Rendered devis/index.html.erb within layouts/application (19.4ms)
+Completed 200 OK in 29ms (Views: 26.1ms | ActiveRecord: 1.1ms)
